@@ -9,6 +9,30 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Work+Sans:wght@400;500;600;700&family=Space+Mono&family=Archivo+Black&display=swap">
 <link rel="stylesheet" href="/assets/style.css">
+<style>
+  /* hero vidéo */
+  .vhero{position:relative;min-height:78vh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;background:var(--encre)}
+  .vhero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.42}
+  .vhero .veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(36,31,26,.5),rgba(211,74,58,.4))}
+  .vhero .inner{position:relative;z-index:2;color:#fff;padding:40px 20px}
+  .vhero .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--jaune);margin:0 0 18px}
+  .vhero h1{font-family:var(--black);font-size:clamp(44px,11vw,96px);line-height:.86;margin:0;letter-spacing:-.02em;text-shadow:0 4px 24px rgba(0,0,0,.3)}
+  .vhero h1 .n{color:var(--jaune)}
+  .vhero .tag{font-family:var(--mono);font-size:clamp(12px,2.4vw,15px);letter-spacing:.16em;text-transform:uppercase;color:#fff;margin:20px 0 0}
+  .vhero .pitch{max-width:54ch;margin:22px auto 0;color:#f2e9df;font-size:16px}
+  /* bandeaux couleur */
+  .band{padding:14px 0;overflow:hidden;white-space:nowrap}
+  .band .run{display:inline-block;font-family:var(--black);font-size:22px;letter-spacing:.02em;color:#fff}
+  .band .run span{opacity:.55;margin:0 14px}
+  /* motif doodle */
+  .doodle{background-image:url('/assets/doodles.svg');background-size:300px;background-repeat:repeat;opacity:1}
+  .photo-band{display:grid;grid-template-columns:1.1fr .9fr;gap:0;align-items:stretch;border-radius:18px;overflow:hidden;border:1px solid var(--line);margin-top:8px}
+  @media (max-width:700px){.photo-band{grid-template-columns:1fr}}
+  .photo-band img{width:100%;height:100%;object-fit:cover;min-height:260px}
+  .photo-band .txt{background:var(--sapin);color:#fff;padding:34px 30px;display:flex;flex-direction:column;justify-content:center}
+  .photo-band .txt h3{font-family:var(--serif);font-size:24px;margin:0 0 10px}
+  .photo-band .txt p{margin:0;font-size:15px;opacity:.95}
+</style>
 </head>
 <body>
 
@@ -18,23 +42,32 @@
     <div class="links">
       <a href="/" class="on">Le projet</a>
       <a href="/menu.html">Le menu</a>
+      <a href="/chiffres.html">Les chiffres</a>
     </div>
   </div>
 </nav>
 
-<header class="hero">
-  <p class="kicker">Proposition — Concession restauration · Saint-Luc Bruxelles</p>
-  <h1>LA KANTOCHE <span class="n">57</span></h1>
-  <p class="tag">Boire · Manger · Event &amp; Catering</p>
-  <p class="pitch">Une restauration conviviale, saine et locale sur les deux sites de Saint-Luc — pensée pour le rythme et le budget des étudiants, prolongée par une plateforme de commande dédiée et une offre catering pour la vie de l'école.</p>
+<header class="vhero">
+  <video autoplay muted loop playsinline poster="/assets/hero-poster.jpg">
+    <source src="/assets/hero.mp4" type="video/mp4">
+  </video>
+  <div class="veil"></div>
+  <div class="inner">
+    <p class="kicker">Restauration · Saint-Luc Bruxelles</p>
+    <h1>LA KANTOCHE <span class="n">57</span></h1>
+    <p class="tag">Boire · Manger · Event &amp; Catering</p>
+    <p class="pitch">La cantine conviviale, saine et locale des deux sites de Saint-Luc — pensée pour le rythme et le budget des étudiants, avec commande en ligne et catering pour la vie de l'école.</p>
+  </div>
 </header>
+
+<div class="band" style="background:var(--rouge)"><div class="run">FRAIS &amp; DE SAISON <span>◆</span> PRIX ÉTUDIANTS <span>◆</span> ZÉRO FILE D'ATTENTE <span>◆</span> LOCAL <span>◆</span> FRAIS &amp; DE SAISON <span>◆</span> PRIX ÉTUDIANTS <span>◆</span> ZÉRO FILE D'ATTENTE <span>◆</span> LOCAL <span>◆</span></div></div>
 
 <div class="wrap">
 
-  <section>
+  <section class="doodle" style="border-radius:16px;padding:32px 24px;margin-top:24px;border:1px solid var(--line)">
     <p class="eyebrow">Le concept</p>
     <h2>Deux lieux, une même table</h2>
-    <p class="sub">Un comptoir take-away rapide au site supérieur et une cafétéria assise au site secondaire, reliés par une cuisine de production unique. Une carte courte et changeante, des produits frais, des prix étudiants — et zéro attente grâce à la commande en ligne.</p>
+    <p class="sub">Un comptoir take-away rapide au site supérieur et une cafétéria assise au site secondaire, reliés par une cuisine de production unique. Une carte courte et changeante, des produits frais, des prix étudiants.</p>
     <div class="stats">
       <div class="stat"><div class="v">2</div><div class="l">sites de service</div></div>
       <div class="stat"><div class="v">~350</div><div class="l">couverts / jour</div></div>
@@ -48,20 +81,30 @@
     </div>
   </section>
 
+  <section style="border-bottom:0">
+    <div class="photo-band">
+      <img src="/assets/sandwich-hero.jpg" alt="Sandwichs frais Kantoche 57">
+      <div class="txt">
+        <h3>Du fait-maison, tout simplement</h3>
+        <p>Sandwichs montés le matin, bowls composés, plats chauds du jour. Des recettes généreuses avec des produits qu'on reconnaît — et toujours une option végé.</p>
+      </div>
+    </div>
+  </section>
+
   <section>
     <p class="eyebrow">Déploiement</p>
     <h2>Une ouverture en deux temps</h2>
-    <p class="sub">Le calendrier tient compte de l'état des lieux : la cuisine est rapidement exploitable, tandis que la cafétéria nécessite des travaux. Nous démarrons donc par la sandwicherie, puis ouvrons la cafétéria.</p>
+    <p class="sub">La cuisine est rapidement exploitable, la cafétéria nécessite des travaux. Nous démarrons donc par la sandwicherie, puis ouvrons la cafétéria.</p>
     <div class="cols">
       <div class="card">
         <span class="phase">Phase 1 · dès la rentrée</span>
         <h3>Kantoche 57 Express</h3>
-        <p>Comptoir take-away au site supérieur. Sandwichs, bowls, snacks et boissons en click &amp; collect. Ouverture immédiate, mise en place matinale depuis la cuisine.</p>
+        <p>Comptoir take-away au site supérieur. Sandwichs, bowls, snacks et boissons en click &amp; collect.</p>
       </div>
       <div class="card">
         <span class="phase two">Phase 2 · après travaux</span>
         <h3>Kantoche 57 Cafét</h3>
-        <p>Cafétéria assise au site secondaire, adossée à la cuisine de production. Plats chauds, pâtes, pizzas et service sur place, une fois les aménagements réalisés.</p>
+        <p>Cafétéria assise au site secondaire, adossée à la cuisine de production. Plats chauds, pâtes, pizzas et service sur place.</p>
       </div>
     </div>
     <p class="note">Production centralisée dans la cuisine du site secondaire ; les préparations sont acheminées chaque matin vers le comptoir Express (3 à 5 min à pied).</p>
@@ -70,7 +113,7 @@
   <section>
     <p class="eyebrow">La plateforme</p>
     <h2>L'app de commande Kantoche 57</h2>
-    <p class="sub">Une application dédiée pour commander sans faire la file le midi, et pour gérer le catering des événements de l'école. Le même outil, deux usages.</p>
+    <p class="sub">Une application dédiée pour commander sans faire la file le midi, et pour gérer le catering des événements de l'école.</p>
     <div class="app">
       <div class="phone">
         <div class="screen">
@@ -84,34 +127,23 @@
         </div>
       </div>
       <ul class="feat">
-        <li><span class="ic">⏱️</span><div><b>Zéro file d'attente</b><br><span>Commande le matin, retrait à l'heure choisie au comptoir Express.</span></div></li>
-        <li><span class="ic">🎉</span><div><b>Catering en quelques clics</b><br><span>Les services de l'école commandent pauses, lunchs et réceptions, avec devis instantané.</span></div></li>
-        <li><span class="ic">📊</span><div><b>Moins de gaspillage</b><br><span>Les commandes anticipées ajustent la production au plus juste.</span></div></li>
-        <li><span class="ic">💳</span><div><b>Paiement simplifié</b><br><span>En ligne ou sur place, avec historique et factures pour l'école.</span></div></li>
+        <li><span class="ic">⏱️</span><div><b>Zéro file d'attente</b><br><span>Commande le matin, retrait à l'heure choisie.</span></div></li>
+        <li><span class="ic">🎉</span><div><b>Catering en quelques clics</b><br><span>Pauses, lunchs et réceptions avec devis instantané.</span></div></li>
+        <li><span class="ic">📊</span><div><b>Moins de gaspillage</b><br><span>Les commandes anticipées ajustent la production.</span></div></li>
+        <li><span class="ic">💳</span><div><b>Paiement simplifié</b><br><span>En ligne ou sur place, factures pour l'école.</span></div></li>
       </ul>
     </div>
-    <p class="note" style="margin-top:20px"><a href="/menu.html" style="color:var(--rouge);font-weight:600">Voir le menu complet →</a></p>
+    <p class="note" style="margin-top:20px"><a href="/menu.html" style="color:var(--rouge);font-weight:600">Voir le menu complet →</a> &nbsp;·&nbsp; <a href="/chiffres.html" style="color:var(--rouge);font-weight:600">Voir les chiffres →</a></p>
   </section>
 
   <section>
     <p class="eyebrow">Nos engagements</p>
     <h2>Sain, local, responsable</h2>
-    <p class="sub">Une cuisine qui a du sens pour une école d'art : des produits de base peu transformés, un approvisionnement local privilégié, et une démarche qualité assumée.</p>
+    <p class="sub">Une cuisine qui a du sens pour une école d'art : produits de base peu transformés, approvisionnement local, démarche qualité assumée.</p>
     <div class="eng">
       <div class="card"><h3>🥬 Frais &amp; de saison</h3><p>Fruits et légumes variés, préparations maison, carte qui suit les saisons.</p></div>
-      <div class="card"><h3>📍 Ancrage local</h3><p>Producteurs et fournisseurs de proximité privilégiés, dans une logique de circuit court.</p></div>
-      <div class="card"><h3>♻️ Anti-gaspi</h3><p>Production ajustée par la commande en ligne, gestion des invendus, emballages écoresponsables.</p></div>
-    </div>
-  </section>
-
-  <section>
-    <p class="eyebrow">L'équipe</p>
-    <h2>Une expérience horeca bruxelloise</h2>
-    <p class="sub">Le projet est porté par un exploitant expérimenté de la restauration à Bruxelles, avec une équipe de terrain dimensionnée pour tenir les deux sites : production matinale, service du midi et développement du catering. Insertion et emplois étudiants font partie du modèle.</p>
-    <div class="stats" style="grid-template-columns:repeat(3,1fr)">
-      <div class="stat"><div class="v">4</div><div class="l">équivalents temps plein</div></div>
-      <div class="stat"><div class="v">Étudiants</div><div class="l">emplois sur le service</div></div>
-      <div class="stat"><div class="v">Insertion</div><div class="l">travailleurs en intégration</div></div>
+      <div class="card"><h3>📍 Ancrage local</h3><p>Producteurs et fournisseurs de proximité privilégiés, en circuit court.</p></div>
+      <div class="card"><h3>♻️ Anti-gaspi</h3><p>Production ajustée par la commande en ligne, emballages écoresponsables.</p></div>
     </div>
   </section>
 
@@ -126,9 +158,7 @@
 </div>
 
 <footer class="foot">
-  <div class="logos">
-    <img src="/assets/logo-esa-bxl.png" alt="ESA St-Luc Bruxelles">
-  </div>
+  <div class="logos"><img src="/assets/logo-esa-bxl.png" alt="ESA St-Luc Bruxelles"></div>
   Kantoche 57 · projet de restauration pour Saint-Luc Bruxelles — document de présentation, éléments indicatifs susceptibles d'évoluer.
 </footer>
 

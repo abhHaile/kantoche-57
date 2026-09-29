@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>La Kantoche 57 — les chiffres</title>
+<meta name="description" content="Le modèle économique de La Kantoche 57 en un coup d'œil : affluence par mois, viabilité et rôle de la commande garantie de l'école.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Work+Sans:wght@400;500;600;700&family=Space+Mono&family=Archivo+Black&display=swap">
+<link rel="stylesheet" href="/assets/style.css">
+<style>
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:8px}
+  @media (max-width:640px){.kpis{grid-template-columns:repeat(2,1fr)}}
+  .kpi{border-radius:14px;padding:20px 16px;color:#fff}
+  .kpi .v{font-family:var(--black);font-size:30px;line-height:1}
+  .kpi .l{font-size:12px;margin-top:8px;opacity:.95}
+  .chartcard{background:var(--paper);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:24px;margin-top:16px}
+  .chartcard h3{font-family:var(--serif);font-size:19px;font-weight:600;margin:0 0 4px}
+  .chartcard .cap{font-size:13px;color:var(--muted);margin:0 0 20px}
+  /* bar chart affluence */
+  .bars{display:flex;align-items:flex-end;gap:8px;height:200px;padding-top:10px;border-bottom:2px solid var(--line)}
+  .bars .col{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;gap:6px;min-width:0}
+  .bars .bar{width:100%;border-radius:6px 6px 0 0;position:relative;transition:none}
+  .bars .pct{font-family:var(--mono);font-size:10px;font-weight:700}
+  .bars .mo{font-family:var(--mono);font-size:9.5px;color:var(--muted);white-space:nowrap}
+  .legend2{display:flex;gap:18px;flex-wrap:wrap;margin-top:16px;font-size:12px;color:var(--muted)}
+  .legend2 .k{display:inline-flex;align-items:center;gap:6px}
+  .legend2 .sw{width:12px;height:12px;border-radius:3px;display:inline-block}
+  /* comparison */
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media (max-width:560px){.compare{grid-template-columns:1fr}}
+  .cmp{border-radius:14px;padding:24px;text-align:center;border:2px solid}
+  .cmp .big{font-family:var(--black);font-size:34px;line-height:1;margin:8px 0}
+  .cmp .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+  .cmp .desc{font-size:13px;margin-top:10px}
+  /* cost breakdown */
+  .costbar{display:flex;height:44px;border-radius:10px;overflow:hidden;margin-top:6px}
+  .costbar .seg{display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--mono);font-size:11px;font-weight:700;min-width:0}
+  .costleg{display:flex;flex-direction:column;gap:6px;margin-top:14px}
+  .costleg .row{display:flex;align-items:center;gap:10px;font-size:13px}
+  .costleg .sw{width:14px;height:14px;border-radius:4px;flex:none}
+  .costleg .amt{margin-left:auto;font-family:var(--mono);color:var(--muted)}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="in">
+    <a class="brand" href="/">KAN<span>·</span>57</a>
+    <div class="links">
+      <a href="/">Le projet</a>
+      <a href="/menu.html">Le menu</a>
+      <a href="/chiffres.html" class="on">Les chiffres</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" style="padding:48px 20px 40px">
+  <h1 style="font-size:clamp(32px,7vw,58px)">LES CHIFFRES</h1>
+  <p class="tag">Un modèle viable — à une condition</p>
+</header>
+
+<div class="wrap">
+  <section>
+    <p class="eyebrow">En un coup d'œil</p>
+    <h2>Le modèle en 4 chiffres</h2>
+    <p class="sub">Chiffres calculés sur le calendrier académique réel 2026-2027, en croisant les rythmes du secondaire et du supérieur.</p>
+    <div class="kpis">
+      <div class="kpi" style="background:var(--rouge)"><div class="v">142</div><div class="l">jours-pleins-équivalents sur 166 jours ouverts</div></div>
+      <div class="kpi" style="background:var(--sapin)"><div class="v">85 %</div><div class="l">taux d'affluence moyen sur l'année</div></div>
+      <div class="kpi" style="background:var(--bleu)"><div class="v">4</div><div class="l">emplois équivalents temps plein</div></div>
+      <div class="kpi" style="background:var(--encre)"><div class="v">~350</div><div class="l">couverts par jour visés</div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="chartcard">
+      <h3>L'affluence suit le calendrier scolaire</h3>
+      <p class="cap">Deux creux marqués : janvier (examens du supérieur) et juin (examens des deux publics). Le reste de l'année tourne à plein.</p>
+      <div class="bars" id="affbars"></div>
+      <div class="legend2">
+        <span class="k"><span class="sw" style="background:var(--sapin)"></span> Forte affluence (≥85 %)</span>
+        <span class="k"><span class="sw" style="background:var(--jaune)"></span> Moyenne (60-85 %)</span>
+        <span class="k"><span class="sw" style="background:var(--rouge)"></span> Creux (&lt;60 %) — période d'examens</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">La démonstration</p>
+    <h2>Pourquoi la participation de l'école est décisive</h2>
+    <p class="sub">Le poste salaires (4 personnes) reste dû même pendant les creux. Sans revenu régulier, les périodes d'examens font basculer le modèle dans le rouge. Une commande garantie de repas par l'école crée le plancher qui rend le service viable.</p>
+    <div class="compare">
+      <div class="cmp" style="border-color:var(--rouge);background:color-mix(in srgb, var(--rouge) 8%, transparent)">
+        <div class="lbl" style="color:var(--rouge)">Sans participation</div>
+        <div class="big" style="color:var(--rouge)">− 65 k€</div>
+        <div class="desc">Résultat annuel déficitaire : la fréquentation libre ne couvre pas les creux de janvier et juin.</div>
+      </div>
+      <div class="cmp" style="border-color:var(--sapin);background:color-mix(in srgb, var(--sapin) 8%, transparent)">
+        <div class="lbl" style="color:var(--sapin)">Avec commande garantie</div>
+        <div class="big" style="color:var(--sapin)">+ 16 k€</div>
+        <div class="desc">~200 repas/jour à tarif coûtant sécurisent la trésorerie. Le service devient pérenne pour l'école.</div>
+      </div>
+    </div>
+    <p class="note">La contrepartie pour l'école : un véritable service intérieur permanent pour ses élèves, à tarif maîtrisé.</p>
+  </section>
+
+  <section style="border-bottom:0">
+    <div class="chartcard">
+      <h3>D'où viennent les coûts</h3>
+      <p class="cap">Le personnel représente près de deux tiers des charges : c'est la source de fragilité, car ces salaires courent même quand les élèves sont en examens.</p>
+      <div class="costbar">
+        <div class="seg" style="background:var(--rouge);width:66%">Personnel 66 %</div>
+        <div class="seg" style="background:var(--bleu);width:17%">Charges 17 %</div>
+        <div class="seg" style="background:var(--jaune);width:17%;color:var(--encre)">Matières 17 %</div>
+      </div>
+      <div class="costleg">
+        <div class="row"><span class="sw" style="background:var(--rouge)"></span> Personnel — 4 ETP, charges comprises <span class="amt">≈ 174 000 € / an</span></div>
+        <div class="row"><span class="sw" style="background:var(--bleu)"></span> Charges fixes — énergie, assurances, gestion <span class="amt">≈ 44 000 € / an</span></div>
+        <div class="row"><span class="sw" style="background:var(--jaune)"></span> Matières premières — variable selon le CA <span class="amt">≈ 35 % du CA</span></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer class="foot">
+  <div class="logos"><img src="/assets/logo-esa-bxl.png" alt="ESA St-Luc Bruxelles"></div>
+  Kantoche 57 · chiffres indicatifs issus du plan financier — <a href="/" style="color:var(--rouge)">retour au projet</a>
+</footer>
+
+<script>
+  // Affluence mensuelle (données réelles du calendrier)
+  var data=[
+    ["Sep",100],["Oct",98],["Nov",99],["Déc",86],["Jan",54],
+    ["Fév",100],["Mar",99],["Avr",100],["Mai",100],["Juin",41]
+  ];
+  function col(p){ return p>=85 ? "var(--sapin)" : (p>=60 ? "var(--jaune)" : "var(--rouge)"); }
+  var el=document.getElementById("affbars");
+  el.innerHTML=data.map(function(d){
+    var h=Math.max(6,d[1]); // % = hauteur %
+    var txtcol = d[1]>=60 ? "var(--encre)" : "#fff";
+    return '<div class="col">'+
+      '<span class="pct" style="color:'+col(d[1])+'">'+d[1]+'%</span>'+
+      '<div class="bar" style="height:'+h+'%;background:'+col(d[1])+'"></div>'+
+      '<span class="mo">'+d[0]+'</span>'+
+      '</div>';
+  }).join("");
+</script>
+
+</body>
+</html>

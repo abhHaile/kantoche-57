@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="360" viewBox="0 0 360 360">
+  <defs>
+    <g id="tri" stroke="#D34A3A" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10 78 L60 8 L92 78 Z"/>
+      <path d="M18 66 q20 -8 40 0" />
+      <path d="M26 74 q16 6 30 0" stroke-width="2"/>
+      <circle cx="44" cy="60" r="4" stroke-width="2"/>
+    </g>
+    <g id="sub" stroke="#166152" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 40 q60 -34 120 0 q6 20 -6 26 q-54 22 -108 0 q-12 -6 -6 -26 Z"/>
+      <path d="M18 40 q45 12 90 0" stroke-width="2"/>
+      <path d="M30 30 l6 -8 M55 27 l6 -8 M80 30 l6 -8" stroke-width="2"/>
+    </g>
+    <g id="club" stroke="#3C5AA6" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="10" y="14" width="86" height="20" rx="4"/>
+      <path d="M12 34 q40 10 82 0" stroke-width="2"/>
+      <rect x="10" y="40" width="86" height="20" rx="4"/>
+      <path d="M12 60 q40 10 82 0" stroke-width="2"/>
+    </g>
+  </defs>
+  <use href="#tri" x="20" y="10"/>
+  <use href="#sub" x="200" y="30"/>
+  <use href="#club" x="40" y="150"/>
+  <use href="#tri" x="240" y="180" transform="rotate(12 290 220)"/>
+  <use href="#sub" x="10" y="270"/>
+  <use href="#club" x="230" y="280"/>
+</svg>
