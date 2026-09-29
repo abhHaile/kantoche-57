@@ -119,3 +119,6 @@ section:last-child{border-bottom:0}
 .fl b{font-family:var(--serif);font-weight:600;font-size:14px}
 .fl b small{display:block;font-family:var(--sans);font-weight:400;color:var(--muted);font-size:11.5px}
 .fl .fp{font-family:var(--mono);color:var(--rouge);font-weight:600;white-space:nowrap}
+
+a.pill{transition:transform .12s ease,filter .12s ease;cursor:pointer}
+a.pill:hover{filter:brightness(1.08);transform:translateY(-1px)}
