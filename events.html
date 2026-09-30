@@ -55,7 +55,10 @@
   .field{margin-bottom:12px}
   .field label{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
   .field input,.field textarea{width:100%;border:1px solid var(--line);border-radius:8px;padding:9px 10px;font-family:var(--sans);font-size:13.5px;background:var(--bg);color:var(--ink);box-sizing:border-box}
-  .field textarea{resize:vertical;min-height:54px}
+  .field textarea{resize:both;min-height:90px;line-height:1.45}
+  .field-2{display:grid;grid-template-columns:2fr 1fr;gap:10px}
+  .field-2 label{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+  .field-2 input{width:100%;border:1px solid var(--line);border-radius:8px;padding:9px 10px;font-family:var(--sans);font-size:13.5px;background:var(--bg);color:var(--ink);box-sizing:border-box}
   .lines{border-top:1px dashed var(--line);margin-top:8px;padding-top:10px;font-size:13px;max-height:170px;overflow-y:auto}
   .lines .ln{display:flex;justify-content:space-between;gap:8px;padding:3px 0;color:var(--muted)}.lines .ln b{color:var(--ink);font-weight:600}
   .total{display:flex;justify-content:space-between;align-items:baseline;margin-top:12px;padding-top:12px;border-top:2px solid var(--line)}
@@ -151,7 +154,7 @@
         <div class="shead">Votre commande</div>
         <div class="sbody">
           <div class="field"><label>Nom / organisation</label><input id="f-nom" placeholder="Ex. Secrétariat ESA"></div>
-          <div class="field"><label>Date de livraison</label><input id="f-date" type="date"></div>
+          <div class="field field-2"><div><label>Date de livraison</label><input id="f-date" type="date"></div><div><label>Heure</label><input id="f-heure" type="time" step="900" value="12:00"></div></div>
           <div class="field"><label>Adresse — livraison ou enlèvement</label><input id="f-lieu" placeholder="Ex. Rue d'Irlande 57, local 2"></div>
           <div class="field"><label>Détails / demandes</label><textarea id="f-det" placeholder="Nb de convives, allergies, heure souhaitée, régimes…"></textarea></div>
           <div class="lines" id="lines"><div class="empty">Sélectionnez des articles…</div></div>
@@ -233,19 +236,24 @@
   function ficheTexte(){
     var L=lignes();
     var nom=document.getElementById('f-nom').value||'—', date=document.getElementById('f-date').value||'—';
+    var heure=document.getElementById('f-heure').value||'—';
     var lieu=document.getElementById('f-lieu').value||'—', det=document.getElementById('f-det').value||'—';
+    var dh = (date!=='—'?date:'—') + (heure!=='—'?(' à '+heure):'');
     var tot=L.reduce(function(a,l){return a+l.tot;},0);
     var t='KANTOCHE 57 — DEMANDE DE CATERING\n====================================\n\n';
-    t+='Nom / organisation : '+nom+'\nDate de livraison  : '+date+'\nLieu (livr./enlèv.): '+lieu+'\nDétails            : '+det+'\n\nARTICLES\n--------\n';
+    t+='Nom / organisation : '+nom+'\nLivraison le       : '+dh+'\nLieu (livr./enlèv.): '+lieu+'\nDétails            : '+det+'\n\nARTICLES\n--------\n';
     if(L.length===0){ t+='(aucun article sélectionné)\n'; } else { L.forEach(function(l){ t+=l.q+' x '+l.nm+'  —  '+euro(l.pu)+'/u  =  '+euro(l.tot)+'\n'; }); }
     t+='\nTOTAL ESTIMÉ TVAC : '+euro(tot)+'\n\nEstimation indicative — commande confirmée après retour de Kantoche 57.\nKantoche 57 · Saint-Luc Bruxelles · abh@gestiamo.be · +32 486 82 48 08\n';
     return t;
   }
   function telecharger(){
+    if(!dateOK()) return;
     // PDF si jsPDF est chargé, sinon repli texte
     if(!(window.jspdf && window.jspdf.jsPDF)){ telechargerTxt(); return; }
     var L=lignes();
     var nom=document.getElementById('f-nom').value||'—', date=document.getElementById('f-date').value||'—';
+    var heure=document.getElementById('f-heure').value||'';
+    var dh = (date!=='—'?date:'—') + (heure?(' à '+heure):'');
     var lieu=document.getElementById('f-lieu').value||'—', det=document.getElementById('f-det').value||'—';
     var tot=L.reduce(function(a,l){return a+l.tot;},0);
     var ROUGE=[211,74,58], ENCRE=[36,31,26], SAPIN=[22,97,82], GREY=[120,112,102];
@@ -277,7 +285,7 @@
       y+=6.5;
     }
     ligneInfo('Nom / organisation', nom);
-    ligneInfo('Date de livraison', date);
+    ligneInfo('Livraison le', dh);
     ligneInfo('Lieu (livr./enlèv.)', lieu);
     // détails multi-lignes
     doc.setFont('helvetica','bold'); doc.text('Détails', M, y);
@@ -325,10 +333,24 @@
     a.href=url; a.download='Kantoche57_commande_'+nom+'.txt'; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
   }
   function envoyerMail(){
+    if(!dateOK()) return;
     var sujet='Demande de catering — '+(document.getElementById('f-nom').value||'Kantoche 57');
     window.location.href='mailto:abh@gestiamo.be?subject='+encodeURIComponent(sujet)+'&body='+encodeURIComponent(ficheTexte());
   }
   render('cat-pauses','pauses'); render('cat-lunchs','lunchs'); render('cat-plateaux','plateaux'); render('cat-events','events'); render('cat-materiel','materiel'); maj();
+  // date de livraison : interdit le passé (min = aujourd'hui)
+  (function(){
+    var d=document.getElementById('f-date'); if(!d) return;
+    var t=new Date(); var iso=t.getFullYear()+'-'+String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0');
+    d.setAttribute('min', iso);
+    d.addEventListener('change', function(){ if(d.value && d.value<iso){ d.setCustomValidity('La date de livraison ne peut pas être dans le passé.'); d.reportValidity(); d.value=''; } else { d.setCustomValidity(''); } });
+  })();
+  function dateOK(){
+    var d=document.getElementById('f-date'); if(!d || !d.value) return true;
+    var t=new Date(); var iso=t.getFullYear()+'-'+String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0');
+    if(d.value<iso){ alert('La date de livraison ne peut pas être dans le passé.'); d.focus(); return false; }
+    return true;
+  }
 </script>
 
 </body>
