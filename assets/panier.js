@@ -30,10 +30,10 @@
   function total(){ var t=0; for(var k in cart) t+=cart[k].pu*cart[k].q; return t; }
   function count(){ var c=0; for(var k in cart) c+=cart[k].q; return c; }
 
-  function add(id,nm,pu){ if(!cart[id]) cart[id]={nm:nm,pu:pu,q:0}; cart[id].q++; save(); render(); pulse(); }
+  function add(id,nm,pu){ if(!cart[id]) cart[id]={nm:nm,pu:pu,q:0}; cart[id].q++; save(); render(); pulse(); if(keepOpen&&keepOpen()) openPanel(); }
   function setQ(id,q){ q=parseInt(q)||0; if(q<=0){ delete cart[id]; } else { if(cart[id]) cart[id].q=q; } save(); render(); }
   // qté absolue avec enregistrement de l'article (utilisé par le configurateur Events)
-  function setItem(id,nm,pu,q){ q=parseInt(q)||0; if(q<=0){ delete cart[id]; } else { cart[id]={nm:nm,pu:pu,q:q}; } save(); render(); }
+  function setItem(id,nm,pu,q){ q=parseInt(q)||0; if(q<=0){ delete cart[id]; } else { cart[id]={nm:nm,pu:pu,q:q}; } save(); render(); if(keepOpen&&keepOpen()) openPanel(); }
   function qtyOf(id){ return cart[id]?cart[id].q:0; }
 
   // ---- injection des boutons "+" sur les lignes ----
@@ -57,21 +57,27 @@
   var fab, panel, linesEl, totEl, cntEl;
   function buildUI(){
     fab=document.createElement('button');
-    fab.className='k57-fab'; fab.type='button';
-    fab.innerHTML='<span class="ic">🛒</span><span class="k57-cnt" id="k57-cnt">0</span><span class="k57-fabtot" id="k57-fabtot">0 €</span>';
+    fab.type='button';
+    fab.innerHTML='<span class="ic">🛒</span><span class="k57-cnt" id="k57-cnt">0</span><span class="lbl">Commander</span><span class="k57-fabtot" id="k57-fabtot">0 €</span>';
     fab.addEventListener('click',openPanel);
-    document.body.appendChild(fab);
+    var navSlot=document.querySelector('.nav .in');
+    if(navSlot){ fab.className='k57-navcart'; navSlot.appendChild(fab); }
+    else { fab.className='k57-fab'; document.body.appendChild(fab); }
 
     panel=document.createElement('div'); panel.className='k57-panel'; panel.setAttribute('role','dialog'); panel.setAttribute('aria-label','Votre commande');
     panel.innerHTML=''+
-      '<div class="k57-shead"><span>Votre commande</span><button type="button" class="k57-close" aria-label="Fermer">×</button></div>'+
+      '<div class="k57-shead"><span>Votre commande</span>'+
+        '<label class="k57-keep"><input type="checkbox" id="k57-keep"> Garder ouvert</label>'+
+        '<button type="button" class="k57-close" aria-label="Fermer">×</button></div>'+
       '<div class="k57-sbody">'+
+        '<div class="k57-reclabel">Articles sélectionnés</div>'+
+        '<div class="k57-lines" id="k57-lines"></div>'+
+        '<div class="k57-total"><span>Total estimé</span><span class="amt" id="k57-tot">0 €</span></div>'+
+        '<div class="k57-sep"></div>'+
         '<div class="k57-f"><label>Nom / organisation</label><input id="k57-nom" placeholder="Ton nom ou le secrétariat…"></div>'+
         '<div class="k57-f k57-f2"><div><label>Date</label><input id="k57-date" type="date"></div><div><label>Heure</label><input id="k57-heure" type="time" step="900" value="12:00"></div></div>'+
         '<div class="k57-f"><label>Lieu — livraison ou enlèvement</label><input id="k57-lieu" placeholder="Ex. Rue d\'Irlande 57, local 2"></div>'+
         '<div class="k57-f"><label>Détails / demandes</label><textarea id="k57-det" placeholder="Allergies, régimes, précisions…"></textarea></div>'+
-        '<div class="k57-lines" id="k57-lines"></div>'+
-        '<div class="k57-total"><span>Total estimé</span><span class="amt" id="k57-tot">0 €</span></div>'+
         '<div class="k57-btns">'+
           '<button type="button" class="k57-btn k57-dl" id="k57-dl">⬇ Télécharger le PDF</button>'+
           '<button type="button" class="k57-btn k57-mail" id="k57-mail">✉ Envoyer par mail</button>'+
@@ -89,6 +95,14 @@
     panel.querySelector('#k57-dl').addEventListener('click',telecharger);
     panel.querySelector('#k57-mail').addEventListener('click',envoyerMail);
     panel.querySelector('#k57-vide').addEventListener('click',function(){ cart={}; save(); render(); });
+    // case "garder ouvert" : mémorisée, masque le voile pour continuer à ajouter
+    var keep=panel.querySelector('#k57-keep');
+    try{ keep.checked = localStorage.getItem('k57_keep')==='1'; }catch(e){}
+    keep.addEventListener('change',function(){
+      try{ localStorage.setItem('k57_keep', keep.checked?'1':'0'); }catch(e){}
+      if(panel.classList.contains('on')) window._k57back.classList.toggle('on', !keep.checked);
+      applyDock();
+    });
 
     // date mini = aujourd'hui
     var d=panel.querySelector('#k57-date');
@@ -96,8 +110,13 @@
     d.setAttribute('min',iso);
     d.addEventListener('change',function(){ if(d.value && d.value<iso){ alert('La date ne peut pas être dans le passé.'); d.value=''; } });
   }
-  function openPanel(){ panel.classList.add('on'); window._k57back.classList.add('on'); }
-  function closePanel(){ panel.classList.remove('on'); window._k57back.classList.remove('on'); }
+  function keepOpen(){ var c=document.getElementById('k57-keep'); return !!(c&&c.checked); }
+  function applyDock(){ // en mode "garder ouvert", décaler la page pour laisser voir les "+"
+    var dock = panel.classList.contains('on') && keepOpen();
+    document.body.classList.toggle('k57-docked', dock);
+  }
+  function openPanel(){ panel.classList.add('on'); window._k57back.classList.toggle('on', !keepOpen()); applyDock(); }
+  function closePanel(){ panel.classList.remove('on'); window._k57back.classList.remove('on'); applyDock(); }
   function pulse(){ fab.classList.remove('pulse'); void fab.offsetWidth; fab.classList.add('pulse'); }
 
   function render(){

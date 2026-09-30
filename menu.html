@@ -139,6 +139,9 @@
       <p>Un plat chaud qui tourne chaque jour — potage, plat, accompagnement, dessert. Une option végé quotidienne <span class="veg">✿</span>.</p>
     </div>
 
+    <!-- MENU DU JOUR (rempli automatiquement selon la date) -->
+    <div id="menujour" class="menujour" hidden></div>
+
     <!-- Semaine 1 -->
     <div class="week">
       <div class="week-label"><span class="num">1</span><span class="ttl">Semaine du 6 octobre</span></div>
@@ -218,5 +221,57 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="/assets/panier.js"></script>
+<script>
+/* Menu du jour : lit le plat du jour dans le calendrier du mois et le rend commandable */
+(function(){
+  var PRIX_MENU = 8.50; // menu complet (potage · plat · dessert)
+  function initMenuJour(){
+    var box=document.getElementById('menujour'); if(!box) return;
+    var days=[].slice.call(document.querySelectorAll('.week .day'));
+    if(!days.length) return;
+    // index par numéro de jour
+    var byNum={};
+    days.forEach(function(d){ var n=parseInt((d.querySelector('.dd')||{}).textContent,10); if(!isNaN(n)) byNum[n]=d; });
+    var today=new Date();
+    var chosen=byNum[today.getDate()]||null, exemple=false;
+    if(!chosen){ // pas de correspondance (week-end, hors période) -> 1er jour, marqué exemple
+      chosen=days[0]; exemple=true;
+    }
+    var dn=(chosen.querySelector('.dn')||{}).textContent||'';
+    var dd=(chosen.querySelector('.dd')||{}).textContent||'';
+    var platEl=chosen.querySelector('.row.plat .val');
+    var plat=platEl?platEl.textContent.replace(/\s+/g,' ').trim():'Plat du jour';
+    function val(lbl){ var rows=chosen.querySelectorAll('.row'); for(var i=0;i<rows.length;i++){ var l=rows[i].querySelector('.lbl'); if(l&&l.textContent.indexOf(lbl)===0){ var v=rows[i].querySelector('.val'); return v?v.textContent.replace(/\s+/g,' ').trim():''; } } return ''; }
+    var potage=val('Potage'), accomp=val('Accomp'), dessert=val('Dessert');
+    var badges=chosen.querySelector('.badges'); var badgesHtml=badges?badges.innerHTML:'';
+    var id='menujour-'+dd;
+    box.hidden=false;
+    box.innerHTML=''+
+      '<div class="mj-head"><span class="mj-tag">🍽 Le menu du jour</span><span class="mj-date">'+dn+' '+dd+(exemple?' · exemple':'')+'</span></div>'+
+      '<div class="mj-body">'+
+        '<div class="mj-info">'+
+          '<div class="mj-plat">'+plat+'</div>'+
+          '<div class="mj-sub">'+(potage?'Potage '+potage+' · ':'')+(accomp?accomp+' · ':'')+(dessert?dessert:'')+'</div>'+
+          '<div class="badges mj-badges">'+badgesHtml+'</div>'+
+        '</div>'+
+        '<div class="mj-order">'+
+          '<div class="mj-prix">'+PRIX_MENU.toLocaleString('fr-BE',{minimumFractionDigits:2})+' €</div>'+
+          '<label class="mj-check"><input type="checkbox" id="mj-cb"> <span>Je commande ce menu</span></label>'+
+        '</div>'+
+      '</div>'+
+      '<p class="mj-note">Menu complet : potage · plat · dessert. À commander la veille avant 15h.</p>';
+    var cb=document.getElementById('mj-cb');
+    function syncCb(){ if(window.K57Panier&&K57Panier.qtyOf){ cb.checked = K57Panier.qtyOf(id)>0; } }
+    cb.addEventListener('change',function(){
+      if(!window.K57Panier) return;
+      if(cb.checked) K57Panier.add(id, 'Menu du jour — '+plat, PRIX_MENU);
+      else if(K57Panier.setItem) K57Panier.setItem(id,'Menu du jour — '+plat,PRIX_MENU,0);
+    });
+    document.addEventListener('k57change', syncCb);
+    syncCb();
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',initMenuJour); else initMenuJour();
+})();
+</script>
 </body>
 </html>

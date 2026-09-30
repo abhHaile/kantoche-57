@@ -129,13 +129,34 @@ a.pill:hover{filter:brightness(1.08);transform:translateY(-1px)}
 .k57-add:active{transform:scale(.92)}
 .mi,.di{align-items:center}
 
-.k57-fab{position:fixed;right:18px;bottom:18px;z-index:60;display:flex;align-items:center;gap:8px;padding:11px 16px 11px 13px;border:none;border-radius:40px;background:var(--rouge);color:#fff;font-family:var(--sans);font-weight:700;font-size:14px;cursor:pointer;box-shadow:0 8px 24px rgba(40,30,20,.28)}
-.k57-fab .ic{font-size:18px}
-.k57-fab .k57-cnt{background:#fff;color:var(--rouge);border-radius:20px;min-width:20px;height:20px;padding:0 6px;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
-.k57-fab .k57-fabtot{font-family:var(--mono);font-size:13px}
-.k57-fab.vide .k57-fabtot{display:none}
-.k57-fab.pulse{animation:k57pulse .4s ease}
-@keyframes k57pulse{0%{transform:scale(1)}40%{transform:scale(1.08)}100%{transform:scale(1)}}
+/* panier dans la barre du haut (desktop + mobile) */
+.k57-navcart{flex:0 0 auto;display:inline-flex;align-items:center;gap:7px;padding:8px 14px 8px 11px;border:none;border-radius:30px;background:var(--rouge);color:#fff;font-family:var(--sans);font-weight:700;font-size:13px;cursor:pointer;box-shadow:0 2px 8px rgba(211,74,58,.35);transition:transform .12s ease}
+.k57-navcart:hover{transform:translateY(-1px)}
+.k57-navcart .ic{font-size:16px;line-height:1}
+.k57-navcart .lbl{font-weight:700}
+.k57-navcart .k57-cnt{background:#fff;color:var(--rouge);border-radius:20px;min-width:20px;height:20px;padding:0 6px;display:inline-flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:800}
+.k57-navcart .k57-fabtot{font-family:var(--mono);font-size:12.5px;font-weight:700}
+.k57-navcart.vide .k57-fabtot,.k57-navcart.vide .k57-cnt{display:none}
+.k57-navcart.pulse{animation:k57pulse .45s cubic-bezier(.2,.9,.3,1.4)}
+@keyframes k57pulse{0%{transform:scale(1)}45%{transform:scale(1.13)}100%{transform:scale(1)}}
+.k57-navcart.pulse .k57-cnt{animation:k57badge .45s ease}
+@keyframes k57badge{0%{transform:scale(1)}50%{transform:scale(1.6)}100%{transform:scale(1)}}
+/* repli flottant si pas de nav */
+.k57-fab{position:fixed;right:20px;top:14px;z-index:60;display:flex;align-items:center;gap:10px;padding:12px 18px;border:3px solid #fff;border-radius:40px;background:var(--rouge);color:#fff;font-family:var(--sans);font-weight:700;font-size:14px;cursor:pointer;box-shadow:0 8px 24px rgba(211,74,58,.4)}
+.k57-fab .k57-cnt{background:#fff;color:var(--rouge);border-radius:20px;min-width:22px;height:22px;padding:0 6px;display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:800}
+.k57-fab.vide .k57-fabtot,.k57-fab.vide .k57-cnt{display:none}
+
+/* nav : garder le panier visible à droite, liens défilables sur petit écran */
+.nav .in{gap:10px}
+.nav .links{min-width:0;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.nav .links::-webkit-scrollbar{display:none}
+.nav .links a{white-space:nowrap}
+@media (max-width:600px){
+  .nav .in{padding:10px 14px}
+  .nav .links a{padding:7px 9px;font-size:11px}
+  .k57-navcart .lbl,.k57-navcart .k57-fabtot{display:none}
+  .k57-navcart{padding:8px 11px}
+}
 
 .k57-back{position:fixed;inset:0;background:rgba(30,22,16,.4);z-index:70;opacity:0;pointer-events:none;transition:opacity .2s ease}
 .k57-back.on{opacity:1;pointer-events:auto}
@@ -165,4 +186,36 @@ a.pill:hover{filter:brightness(1.08);transform:translateY(-1px)}
 .k57-mail{background:var(--sapin);color:#fff}
 .k57-vide{margin-top:12px;background:none;border:none;color:var(--muted);font-family:var(--mono);font-size:11px;text-decoration:underline;cursor:pointer}
 .k57-hint{color:var(--muted);font-size:11px;margin-top:12px;line-height:1.4}
-@media (max-width:600px){.k57-fab{right:12px;bottom:12px}}
+.k57-reclabel{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--rouge);margin-bottom:6px}
+.k57-lines{margin:0}
+.k57-sep{height:1px;background:var(--line);margin:16px 0}
+.k57-shead{gap:10px}
+.k57-keep{margin-left:auto;display:inline-flex;align-items:center;gap:5px;font-family:var(--sans);font-size:11.5px;font-weight:600;color:#fff;opacity:.95;cursor:pointer;white-space:nowrap}
+.k57-keep input{width:15px;height:15px;accent-color:#fff;cursor:pointer}
+
+/* mode "garder ouvert" : la page se décale pour laisser voir les boutons + */
+body{transition:margin-right .25s ease}
+@media (min-width:721px){
+  body.k57-docked{margin-right:360px}
+}
+/* sur petit écran, le panneau occupe presque tout : pas de décalage */
+@media (max-width:720px){
+  body.k57-docked{margin-right:0}
+}
+
+/* Encart Menu du jour (page carte) */
+.menujour{background:var(--paper);border:2px solid var(--rouge);border-radius:16px;overflow:hidden;box-shadow:var(--shadow);margin:0 0 22px}
+.mj-head{background:var(--rouge);color:#fff;padding:12px 18px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.mj-tag{font-family:var(--serif);font-size:18px;font-weight:600}
+.mj-date{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;opacity:.95}
+.mj-body{padding:16px 18px;display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}
+.mj-info{min-width:0;flex:1}
+.mj-plat{font-family:var(--serif);font-size:20px;font-weight:600;color:var(--ink)}
+.mj-sub{color:var(--muted);font-size:13.5px;margin-top:3px}
+.mj-badges{margin-top:8px}
+.mj-order{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+.mj-prix{font-family:var(--black);font-size:24px;color:var(--rouge);line-height:1}
+.mj-check{display:inline-flex;align-items:center;gap:8px;background:var(--rouge);color:#fff;padding:10px 16px;border-radius:30px;font-family:var(--sans);font-weight:700;font-size:14px;cursor:pointer;box-shadow:0 2px 8px rgba(211,74,58,.35)}
+.mj-check input{width:18px;height:18px;accent-color:#fff;cursor:pointer}
+.mj-note{color:var(--muted);font-size:11.5px;padding:0 18px 14px;margin:0}
+@media (max-width:520px){.mj-body{flex-direction:column;align-items:stretch}.mj-order{align-items:stretch;flex-direction:row;justify-content:space-between}.mj-check{justify-content:center;flex:1}}
