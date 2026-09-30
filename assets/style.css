@@ -122,3 +122,47 @@ section:last-child{border-bottom:0}
 
 a.pill{transition:transform .12s ease,filter .12s ease;cursor:pointer}
 a.pill:hover{filter:brightness(1.08);transform:translateY(-1px)}
+
+/* ===== Panier partagé Kantoche 57 ===== */
+.k57-add{flex:0 0 auto;margin-left:10px;width:26px;height:26px;border-radius:50%;border:none;background:var(--rouge);color:#fff;font-size:17px;line-height:1;cursor:pointer;font-family:var(--sans);display:inline-flex;align-items:center;justify-content:center;transition:transform .12s ease,filter .12s ease}
+.k57-add:hover{transform:scale(1.12);filter:brightness(1.05)}
+.k57-add:active{transform:scale(.92)}
+.mi,.di{align-items:center}
+
+.k57-fab{position:fixed;right:18px;bottom:18px;z-index:60;display:flex;align-items:center;gap:8px;padding:11px 16px 11px 13px;border:none;border-radius:40px;background:var(--rouge);color:#fff;font-family:var(--sans);font-weight:700;font-size:14px;cursor:pointer;box-shadow:0 8px 24px rgba(40,30,20,.28)}
+.k57-fab .ic{font-size:18px}
+.k57-fab .k57-cnt{background:#fff;color:var(--rouge);border-radius:20px;min-width:20px;height:20px;padding:0 6px;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+.k57-fab .k57-fabtot{font-family:var(--mono);font-size:13px}
+.k57-fab.vide .k57-fabtot{display:none}
+.k57-fab.pulse{animation:k57pulse .4s ease}
+@keyframes k57pulse{0%{transform:scale(1)}40%{transform:scale(1.08)}100%{transform:scale(1)}}
+
+.k57-back{position:fixed;inset:0;background:rgba(30,22,16,.4);z-index:70;opacity:0;pointer-events:none;transition:opacity .2s ease}
+.k57-back.on{opacity:1;pointer-events:auto}
+.k57-panel{position:fixed;top:0;right:0;height:100%;width:360px;max-width:92vw;z-index:80;background:var(--paper);border-left:3px solid var(--rouge);box-shadow:-12px 0 40px rgba(40,30,20,.25);transform:translateX(105%);transition:transform .25s ease;display:flex;flex-direction:column}
+.k57-panel.on{transform:translateX(0)}
+.k57-shead{background:var(--rouge);color:#fff;padding:16px 18px;display:flex;justify-content:space-between;align-items:center;font-family:var(--serif);font-size:19px;font-weight:600}
+.k57-close{background:none;border:none;color:#fff;font-size:26px;line-height:1;cursor:pointer;padding:0 4px}
+.k57-sbody{padding:16px 18px;overflow-y:auto;flex:1}
+.k57-f{margin-bottom:11px}
+.k57-f label{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.k57-f input,.k57-f textarea{width:100%;border:1px solid var(--line);border-radius:8px;padding:9px 10px;font-family:var(--sans);font-size:13.5px;background:var(--bg);color:var(--ink);box-sizing:border-box}
+.k57-f textarea{resize:both;min-height:70px;line-height:1.45}
+.k57-f2{display:grid;grid-template-columns:2fr 1fr;gap:10px}
+.k57-lines{margin:14px 0 0;border-top:1px dotted var(--line);padding-top:10px}
+.k57-empty{color:var(--muted);font-size:13px;font-style:italic;padding:8px 0}
+.k57-ln{display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center;padding:7px 0;border-bottom:1px dotted var(--line);font-size:13.5px}
+.k57-ln .nm{min-width:0;line-height:1.25}
+.k57-ln .qc{display:inline-flex;align-items:center;gap:7px}
+.k57-ln .qc button{width:22px;height:22px;border-radius:50%;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer;font-size:14px;line-height:1}
+.k57-ln .qc b{min-width:14px;text-align:center;font-family:var(--mono);font-size:13px}
+.k57-ln .tt{font-family:var(--mono);font-size:13px;white-space:nowrap}
+.k57-total{display:flex;justify-content:space-between;align-items:baseline;margin-top:12px;padding-top:12px;border-top:2px solid var(--line)}
+.k57-total .amt{font-family:var(--black);font-size:22px;color:var(--rouge)}
+.k57-btns{display:flex;flex-direction:column;gap:8px;margin-top:14px}
+.k57-btn{border:none;border-radius:10px;padding:12px;font-family:var(--sans);font-weight:700;font-size:14px;cursor:pointer}
+.k57-dl{background:var(--rouge);color:#fff}
+.k57-mail{background:var(--sapin);color:#fff}
+.k57-vide{margin-top:12px;background:none;border:none;color:var(--muted);font-family:var(--mono);font-size:11px;text-decoration:underline;cursor:pointer}
+.k57-hint{color:var(--muted);font-size:11px;margin-top:12px;line-height:1.4}
+@media (max-width:600px){.k57-fab{right:12px;bottom:12px}}

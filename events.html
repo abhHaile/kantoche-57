@@ -10,7 +10,6 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Work+Sans:wght@400;500;600;700&family=Space+Mono&family=Archivo+Black&display=swap">
 <link rel="stylesheet" href="/assets/style.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="/assets/logo-data.js"></script>
 <style>
   /* Couleur signature de la page events : bleu ESA */
   .ev-hero{background:var(--bleu)}
@@ -39,6 +38,8 @@
   .unit{font-family:var(--mono);font-size:11px;opacity:.85}
   .layout{display:grid;grid-template-columns:1fr 330px;gap:20px;align-items:start;margin-top:8px}
   @media (max-width:860px){.layout{grid-template-columns:1fr}}
+  .catgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px;align-items:start}
+  @media (max-width:720px){.catgrid{grid-template-columns:1fr}}
   .catcard{background:var(--paper);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);margin-bottom:16px}
   .chead{background:var(--bleu);color:#fff;padding:12px 18px;font-family:var(--serif);font-size:17px;font-weight:600}
   .cbody{padding:6px 18px 12px}
@@ -141,32 +142,14 @@
     <h2>Estimez votre catering en direct</h2>
     <p class="sub">Choisissez vos articles, le total se calcule automatiquement. Renseignez vos coordonnées, puis téléchargez la fiche ou envoyez-la nous par mail.</p>
 
-    <div class="layout">
-      <div>
-        <div class="catcard"><div class="chead">Les pauses <span class="unit">/ personne</span></div><div class="cbody" id="cat-pauses"></div></div>
-        <div class="catcard"><div class="chead">Les lunchs <span class="unit">/ personne</span></div><div class="cbody" id="cat-lunchs"></div></div>
-        <div class="catcard"><div class="chead">Les plateaux <span class="unit">~10 pers.</span></div><div class="cbody" id="cat-plateaux"></div></div>
-        <div class="catcard"><div class="chead">Réceptions &amp; événements <span class="unit">/ personne</span></div><div class="cbody" id="cat-events"></div></div>
-        <div class="catcard"><div class="chead">Matériel &amp; consommables <span class="unit">à la demande</span></div><div class="cbody" id="cat-materiel"></div></div>
-      </div>
-
-      <div class="summary">
-        <div class="shead">Votre commande</div>
-        <div class="sbody">
-          <div class="field"><label>Nom / organisation</label><input id="f-nom" placeholder="Ex. Secrétariat ESA"></div>
-          <div class="field field-2"><div><label>Date de livraison</label><input id="f-date" type="date"></div><div><label>Heure</label><input id="f-heure" type="time" step="900" value="12:00"></div></div>
-          <div class="field"><label>Adresse — livraison ou enlèvement</label><input id="f-lieu" placeholder="Ex. Rue d'Irlande 57, local 2"></div>
-          <div class="field"><label>Détails / demandes</label><textarea id="f-det" placeholder="Nb de convives, allergies, heure souhaitée, régimes…"></textarea></div>
-          <div class="lines" id="lines"><div class="empty">Sélectionnez des articles…</div></div>
-          <div class="total"><span class="lbl">Total estimé</span><span class="amt" id="total">0 €</span></div>
-          <div class="btns">
-            <button class="btn btn-dl" onclick="telecharger()">⬇ Télécharger le PDF</button>
-            <button class="btn btn-mail" onclick="envoyerMail()">✉ Envoyer par mail</button>
-          </div>
-          <p class="hint">Estimation indicative TVAC. La commande n'est confirmée qu'après notre retour. Min. 10 personnes · 48h à l'avance.</p>
-        </div>
-      </div>
+    <div class="catgrid">
+      <div class="catcard"><div class="chead">Les pauses <span class="unit">/ personne</span></div><div class="cbody" id="cat-pauses"></div></div>
+      <div class="catcard"><div class="chead">Les lunchs <span class="unit">/ personne</span></div><div class="cbody" id="cat-lunchs"></div></div>
+      <div class="catcard"><div class="chead">Les plateaux <span class="unit">~10 pers.</span></div><div class="cbody" id="cat-plateaux"></div></div>
+      <div class="catcard"><div class="chead">Réceptions &amp; événements <span class="unit">/ personne</span></div><div class="cbody" id="cat-events"></div></div>
+      <div class="catcard"><div class="chead">Matériel &amp; consommables <span class="unit">à la demande</span></div><div class="cbody" id="cat-materiel"></div></div>
     </div>
+    <p class="sub" style="margin-top:14px">Vos articles s'ajoutent au panier <b>🛒 Votre commande</b> (en bas à droite) : total en direct, fiche PDF et envoi par mail. Le panier vous suit sur toutes les pages du site.</p>
   </section>
 </div>
 
@@ -211,8 +194,8 @@
       {id:'m10', nm:'Reprise & nettoyage', sub:'forfait événement', pu:35.00},
     ]
   };
-  var qte = {};
   function euro(n){ return n.toLocaleString('fr-BE',{minimumFractionDigits:2,maximumFractionDigits:2})+' €'; }
+  function prodById(id){ var a=[].concat(PRODUITS.pauses,PRODUITS.lunchs,PRODUITS.plateaux,PRODUITS.events,PRODUITS.materiel); for(var i=0;i<a.length;i++) if(a[i].id===id) return a[i]; return null; }
   function render(catId, listId){
     document.getElementById(catId).innerHTML = PRODUITS[listId].map(function(p){
       return '<div class="oi"><div class="oinfo"><span class="nm">'+p.nm+'</span>'+(p.sub?'<small>'+p.sub+'</small>':'')+'</div>'+
@@ -222,136 +205,21 @@
         '<button onclick="chg(\''+p.id+'\',1)">+</button></div></div>';
     }).join('');
   }
-  function allProducts(){ return [].concat(PRODUITS.pauses,PRODUITS.lunchs,PRODUITS.plateaux,PRODUITS.events,PRODUITS.materiel); }
-  function chg(id,d){ var q=(qte[id]||0)+d; if(q<0)q=0; qte[id]=q; document.getElementById('q-'+id).value=q; maj(); }
-  function setq(id,v){ var q=parseInt(v)||0; if(q<0)q=0; qte[id]=q; document.getElementById('q-'+id).value=q; maj(); }
-  function lignes(){ var out=[]; allProducts().forEach(function(p){ if(qte[p.id]>0){ out.push({nm:p.nm,q:qte[p.id],pu:p.pu,tot:qte[p.id]*p.pu}); } }); return out; }
-  function maj(){
-    var L=lignes(), box=document.getElementById('lines');
-    if(L.length===0){ box.innerHTML='<div class="empty">Sélectionnez des articles…</div>'; }
-    else { box.innerHTML=L.map(function(l){ return '<div class="ln"><span>'+l.q+' × <b>'+l.nm+'</b></span><span>'+euro(l.tot)+'</span></div>'; }).join(''); }
-    var tot=L.reduce(function(a,l){return a+l.tot;},0);
-    document.getElementById('total').textContent=euro(tot);
+  function qOf(id){ return (window.K57Panier && K57Panier.qtyOf) ? K57Panier.qtyOf(id) : 0; }
+  function pushCart(id,q){ var p=prodById(id); if(!p||!window.K57Panier) return; K57Panier.setItem(id,p.nm,p.pu,q); }
+  function chg(id,d){ var q=qOf(id)+d; if(q<0)q=0; pushCart(id,q); }
+  function setq(id,v){ var q=parseInt(v)||0; if(q<0)q=0; pushCart(id,q); }
+  // synchronise les compteurs des cartes produits avec le panier (modifs faites dans le panneau)
+  function syncInputs(){
+    ['pauses','lunchs','plateaux','events','materiel'].forEach(function(g){
+      PRODUITS[g].forEach(function(p){ var el=document.getElementById('q-'+p.id); if(el){ var q=qOf(p.id); if(String(q)!==el.value) el.value=q; } });
+    });
   }
-  function ficheTexte(){
-    var L=lignes();
-    var nom=document.getElementById('f-nom').value||'—', date=document.getElementById('f-date').value||'—';
-    var heure=document.getElementById('f-heure').value||'—';
-    var lieu=document.getElementById('f-lieu').value||'—', det=document.getElementById('f-det').value||'—';
-    var dh = (date!=='—'?date:'—') + (heure!=='—'?(' à '+heure):'');
-    var tot=L.reduce(function(a,l){return a+l.tot;},0);
-    var t='KANTOCHE 57 — DEMANDE DE CATERING\n====================================\n\n';
-    t+='Nom / organisation : '+nom+'\nLivraison le       : '+dh+'\nLieu (livr./enlèv.): '+lieu+'\nDétails            : '+det+'\n\nARTICLES\n--------\n';
-    if(L.length===0){ t+='(aucun article sélectionné)\n'; } else { L.forEach(function(l){ t+=l.q+' x '+l.nm+'  —  '+euro(l.pu)+'/u  =  '+euro(l.tot)+'\n'; }); }
-    t+='\nTOTAL ESTIMÉ TVAC : '+euro(tot)+'\n\nEstimation indicative — commande confirmée après retour de Kantoche 57.\nKantoche 57 · Saint-Luc Bruxelles · abh@gestiamo.be · +32 486 82 48 08\n';
-    return t;
-  }
-  function telecharger(){
-    if(!dateOK()) return;
-    // PDF si jsPDF est chargé, sinon repli texte
-    if(!(window.jspdf && window.jspdf.jsPDF)){ telechargerTxt(); return; }
-    var L=lignes();
-    var nom=document.getElementById('f-nom').value||'—', date=document.getElementById('f-date').value||'—';
-    var heure=document.getElementById('f-heure').value||'';
-    var dh = (date!=='—'?date:'—') + (heure?(' à '+heure):'');
-    var lieu=document.getElementById('f-lieu').value||'—', det=document.getElementById('f-det').value||'—';
-    var tot=L.reduce(function(a,l){return a+l.tot;},0);
-    var ROUGE=[211,74,58], ENCRE=[36,31,26], SAPIN=[22,97,82], GREY=[120,112,102];
-    var doc=new window.jspdf.jsPDF({unit:'mm',format:'a4'});
-    var W=210, M=16, y=16;
-
-    // bandeau rouge en-tête façon carte postale
-    doc.setFillColor(ROUGE[0],ROUGE[1],ROUGE[2]); doc.rect(0,0,W,42,'F');
-    // wordmark "KAN-/TOCHE/57" empilé sur 3 lignes, 57 en encre
-    doc.setFont('helvetica','bold'); doc.setFontSize(20);
-    doc.setTextColor(255,255,255);
-    doc.text('KAN-', M, 14);
-    doc.text('TOCHE', M, 26);
-    doc.setTextColor(ENCRE[0],ENCRE[1],ENCRE[2]);
-    doc.text('57', M, 38);
-    // bloc titre à droite
-    doc.setTextColor(255,255,255); doc.setFont('helvetica','bold'); doc.setFontSize(20);
-    doc.text('VOTRE COMMANDE', W-M, 18, {align:'right'});
-    doc.setFont('helvetica','normal'); doc.setFontSize(9);
-    doc.text('Boire · Manger · Event & Catering', W-M, 26, {align:'right'});
-    doc.text('Saint-Luc Bruxelles', W-M, 31, {align:'right'});
-    y=54;
-
-    // bloc coordonnées
-    doc.setTextColor(ENCRE[0],ENCRE[1],ENCRE[2]); doc.setFontSize(10);
-    function ligneInfo(lbl,val){
-      doc.setFont('helvetica','bold'); doc.text(lbl, M, y);
-      doc.setFont('helvetica','normal'); doc.text(String(val), M+42, y);
-      y+=6.5;
-    }
-    ligneInfo('Nom / organisation', nom);
-    ligneInfo('Livraison le', dh);
-    ligneInfo('Lieu (livr./enlèv.)', lieu);
-    // détails multi-lignes
-    doc.setFont('helvetica','bold'); doc.text('Détails', M, y);
-    doc.setFont('helvetica','normal');
-    var detLines=doc.splitTextToSize(det, W-M-M-42);
-    doc.text(detLines, M+42, y); y+= Math.max(6.5, detLines.length*5.2)+2;
-
-    // titre tableau
-    y+=4;
-    doc.setDrawColor(226,220,207); doc.line(M,y,W-M,y); y+=8;
-    doc.setFont('helvetica','bold'); doc.setFontSize(9); doc.setTextColor(GREY[0],GREY[1],GREY[2]);
-    doc.text('ARTICLE', M, y); doc.text('QTÉ', 120, y, {align:'right'});
-    doc.text('P.U.', 150, y, {align:'right'}); doc.text('TOTAL', W-M, y, {align:'right'});
-    y+=3; doc.setDrawColor(226,220,207); doc.line(M,y,W-M,y); y+=6;
-
-    doc.setFont('helvetica','normal'); doc.setFontSize(10); doc.setTextColor(ENCRE[0],ENCRE[1],ENCRE[2]);
-    if(L.length===0){ doc.setTextColor(GREY[0],GREY[1],GREY[2]); doc.text('Aucun article sélectionné', M, y); y+=7; }
-    else { L.forEach(function(l){
-      doc.text(l.nm, M, y);
-      doc.text(String(l.q), 120, y, {align:'right'});
-      doc.text(euro(l.pu), 150, y, {align:'right'});
-      doc.text(euro(l.tot), W-M, y, {align:'right'});
-      y+=6.5;
-    }); }
-
-    // total
-    y+=2; doc.setDrawColor(ROUGE[0],ROUGE[1],ROUGE[2]); doc.setLineWidth(0.6); doc.line(120,y,W-M,y); y+=8;
-    doc.setFont('helvetica','bold'); doc.setFontSize(13); doc.setTextColor(ROUGE[0],ROUGE[1],ROUGE[2]);
-    doc.text('TOTAL ESTIMÉ TVAC', 120, y, {align:'right'});
-    doc.setFontSize(15); doc.text(euro(tot), W-M, y, {align:'right'}); y+=14;
-
-    // pied
-    doc.setFont('helvetica','italic'); doc.setFontSize(8); doc.setTextColor(GREY[0],GREY[1],GREY[2]);
-    doc.text('Estimation indicative — la commande est confirmée après notre retour. Min. 10 personnes · 48h à l\'avance.', M, 274);
-    doc.setFillColor(SAPIN[0],SAPIN[1],SAPIN[2]); doc.rect(0,282,W,15,'F');
-    doc.setTextColor(255,255,255); doc.setFont('helvetica','normal'); doc.setFontSize(9);
-    doc.text('Kantoche 57 · Saint-Luc Bruxelles · abh@gestiamo.be · +32 486 82 48 08', W/2, 291, {align:'center'});
-
-    var f=(document.getElementById('f-nom').value||'commande').replace(/[^a-z0-9]/gi,'_');
-    doc.save('Kantoche57_commande_'+f+'.pdf');
-  }
-  function telechargerTxt(){
-    var blob=new Blob([ficheTexte()],{type:'text/plain;charset=utf-8'}), url=URL.createObjectURL(blob);
-    var a=document.createElement('a'); var nom=(document.getElementById('f-nom').value||'commande').replace(/[^a-z0-9]/gi,'_');
-    a.href=url; a.download='Kantoche57_commande_'+nom+'.txt'; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
-  }
-  function envoyerMail(){
-    if(!dateOK()) return;
-    var sujet='Demande de catering — '+(document.getElementById('f-nom').value||'Kantoche 57');
-    window.location.href='mailto:abh@gestiamo.be?subject='+encodeURIComponent(sujet)+'&body='+encodeURIComponent(ficheTexte());
-  }
-  render('cat-pauses','pauses'); render('cat-lunchs','lunchs'); render('cat-plateaux','plateaux'); render('cat-events','events'); render('cat-materiel','materiel'); maj();
-  // date de livraison : interdit le passé (min = aujourd'hui)
-  (function(){
-    var d=document.getElementById('f-date'); if(!d) return;
-    var t=new Date(); var iso=t.getFullYear()+'-'+String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0');
-    d.setAttribute('min', iso);
-    d.addEventListener('change', function(){ if(d.value && d.value<iso){ d.setCustomValidity('La date de livraison ne peut pas être dans le passé.'); d.reportValidity(); d.value=''; } else { d.setCustomValidity(''); } });
-  })();
-  function dateOK(){
-    var d=document.getElementById('f-date'); if(!d || !d.value) return true;
-    var t=new Date(); var iso=t.getFullYear()+'-'+String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0');
-    if(d.value<iso){ alert('La date de livraison ne peut pas être dans le passé.'); d.focus(); return false; }
-    return true;
-  }
+  render('cat-pauses','pauses'); render('cat-lunchs','lunchs'); render('cat-plateaux','plateaux'); render('cat-events','events'); render('cat-materiel','materiel');
+  document.addEventListener('k57change', syncInputs);
+  syncInputs();
 </script>
 
+<script src="/assets/panier.js"></script>
 </body>
 </html>
