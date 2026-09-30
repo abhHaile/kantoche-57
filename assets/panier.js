@@ -75,6 +75,11 @@
         '<div class="k57-total"><span>Total estimé</span><span class="amt" id="k57-tot">0 €</span></div>'+
         '<div class="k57-sep"></div>'+
         '<div class="k57-f"><label>Nom / organisation</label><input id="k57-nom" placeholder="Ton nom ou le secrétariat…"></div>'+
+        '<div class="k57-f">'+
+          '<label>Livraison</label>'+
+          '<div class="k57-quick" id="k57-qdate"><button type="button" data-day="0">Aujourd\'hui</button><button type="button" data-day="1">Demain</button></div>'+
+          '<div class="k57-quick" id="k57-qheure"><button type="button" data-h="12:00">12h00</button><button type="button" data-h="12:30">12h30</button><button type="button" data-h="13:00">13h00</button></div>'+
+        '</div>'+
         '<div class="k57-f k57-f2"><div><label>Date</label><input id="k57-date" type="date"></div><div><label>Heure</label><input id="k57-heure" type="time" step="900" value="12:00"></div></div>'+
         '<div class="k57-f"><label>Lieu — livraison ou enlèvement</label><input id="k57-lieu" placeholder="Ex. Rue d\'Irlande 57, local 2"></div>'+
         '<div class="k57-f"><label>Détails / demandes</label><textarea id="k57-det" placeholder="Allergies, régimes, précisions…"></textarea></div>'+
@@ -108,7 +113,23 @@
     var d=panel.querySelector('#k57-date');
     var t=new Date(); var iso=t.getFullYear()+'-'+String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0');
     d.setAttribute('min',iso);
-    d.addEventListener('change',function(){ if(d.value && d.value<iso){ alert('La date ne peut pas être dans le passé.'); d.value=''; } });
+    d.addEventListener('change',function(){ if(d.value && d.value<iso){ alert('La date ne peut pas être dans le passé.'); d.value=''; } syncQuick(); });
+    // présélections rapides date (aujourd'hui / demain)
+    function isoPlus(n){ var x=new Date(); x.setDate(x.getDate()+n); return x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0'); }
+    panel.querySelectorAll('#k57-qdate button').forEach(function(btn){
+      btn.addEventListener('click',function(){ d.value=isoPlus(parseInt(btn.dataset.day,10)); syncQuick(); });
+    });
+    // présélections rapides heure
+    var h=panel.querySelector('#k57-heure');
+    panel.querySelectorAll('#k57-qheure button').forEach(function(btn){
+      btn.addEventListener('click',function(){ h.value=btn.dataset.h; syncQuick(); });
+    });
+    h.addEventListener('change',syncQuick);
+    function syncQuick(){
+      panel.querySelectorAll('#k57-qdate button').forEach(function(b){ b.classList.toggle('on', d.value===isoPlus(parseInt(b.dataset.day,10))); });
+      panel.querySelectorAll('#k57-qheure button').forEach(function(b){ b.classList.toggle('on', h.value===b.dataset.h); });
+    }
+    syncQuick();
   }
   function keepOpen(){ var c=document.getElementById('k57-keep'); return !!(c&&c.checked); }
   function applyDock(){ // en mode "garder ouvert", décaler la page pour laisser voir les "+"
