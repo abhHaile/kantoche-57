@@ -3,12 +3,56 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>La Kantoche 57 — le menu</title>
-<meta name="description" content="La carte et le menu catering de La Kantoche 57 — sandwichs, salades, plats chauds, formules et offre catering pour Saint-Luc Bruxelles.">
+<title>La Kantoche 57 — la carte</title>
+<meta name="description" content="La carte permanente et le menu du mois de La Kantoche 57 — sandwichs, salades, plats chauds, formules et menu du jour pour Saint-Luc Bruxelles.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Work+Sans:wght@400;500;600;700&family=Space+Mono&family=Archivo+Black&display=swap">
 <link rel="stylesheet" href="/assets/style.css">
+<style>
+  .menucard{background:var(--paper);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:var(--shadow)}
+  .mhead{color:#fff;padding:18px 22px;background:var(--rouge)}
+  .mhead .mt{font-family:var(--serif);font-size:21px;font-weight:600}
+  .mhead .ms{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;opacity:.92;margin-top:2px}
+  .mbody{padding:6px 22px 20px}
+  .mcat{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--rouge);margin:18px 0 3px;border-bottom:2px solid var(--line);padding-bottom:4px}
+  .mi{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:6px 0;border-bottom:1px dotted var(--line);font-size:14px}
+  .mi .n{min-width:0}
+  .mi .n small{display:block;color:var(--muted);font-size:11.5px;margin-top:1px}
+  .mi .p{font-family:var(--mono);font-size:13px;white-space:nowrap;font-variant-numeric:tabular-nums}
+  .veg{color:var(--sapin);font-weight:700}
+  .fbox{margin-top:16px;background:var(--bg);border-radius:10px;padding:14px 16px}
+  .fbt{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--rouge);margin-bottom:6px}
+  .fl{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:5px 0}
+  .fl b{font-family:var(--serif);font-weight:600;font-size:14px}
+  .fl b small{display:block;font-family:var(--sans);font-weight:400;color:var(--muted);font-size:11.5px}
+  .fl .fp{font-family:var(--mono);color:var(--rouge);font-weight:600;white-space:nowrap}
+
+  /* ===== MENU DU MOIS — cartes par jour ===== */
+  .month-intro{background:var(--sapin);color:#fff;border-radius:14px;padding:20px 24px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;margin-bottom:20px}
+  .month-intro .mi-t{font-family:var(--black);font-size:clamp(22px,4vw,30px);line-height:1}
+  .month-intro .mi-s{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;opacity:.9;margin-top:4px}
+  .month-intro p{margin:0;font-size:13.5px;max-width:42ch;opacity:.95}
+  .week{margin-bottom:22px}
+  .week-label{display:flex;align-items:center;gap:12px;margin:0 0 12px}
+  .week-label .num{font-family:var(--black);font-size:13px;background:var(--rouge);color:#fff;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;flex:none}
+  .week-label .ttl{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  .days{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+  @media (max-width:900px){.days{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:480px){.days{grid-template-columns:1fr}}
+  .day{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:8px}
+  .day .dh{display:flex;align-items:baseline;justify-content:space-between;border-bottom:2px solid var(--rouge);padding-bottom:6px}
+  .day .dh .dn{font-family:var(--black);font-size:15px}
+  .day .dh .dd{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+  .row{display:flex;flex-direction:column;gap:1px}
+  .row .lbl{font-family:var(--mono);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .row .val{font-size:12.5px;line-height:1.3}
+  .row.plat .val{font-weight:600}
+  .day.vegday{border-color:var(--sapin)}
+  .express{background:var(--bg);border:1px dashed var(--rouge);border-radius:10px;padding:10px 14px;margin-top:10px;font-size:12.5px}
+  .express b.tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--rouge)}
+  .legend3{display:flex;gap:18px;flex-wrap:wrap;margin-top:18px;font-size:12px;color:var(--muted)}
+</style>
 </head>
 <body>
 
@@ -19,7 +63,7 @@
       <a href="/">Le projet</a>
       <a href="/menu.html" class="on">La carte</a>
       <a href="/boissons.html">Les boissons</a>
-      <a href="/events.html">Events & Catering</a>
+      <a href="/events.html">Events &amp; Catering</a>
       <a href="/chiffres.html">Les chiffres</a>
     </div>
   </div>
@@ -31,97 +75,106 @@
 </header>
 
 <div class="wrap">
- <div class="carte-menu-grid">
+
+  <!-- CARTE PERMANENTE -->
   <section>
-    <div class="menucols">
+    <div class="menucard">
+      <div class="mhead"><div class="mt">La carte permanente</div><div class="ms">Tous les jours · take-away &amp; cafét</div></div>
+      <div class="mbody">
+        <div class="mcat">Les sandwichs &amp; wraps</div>
+        <div class="mi"><span class="n">Le Classique <small>jambon, fromage, crudités</small></span><span class="p">4,50 €</span></div>
+        <div class="mi"><span class="n">Le Végé <span class="veg">✿</span> <small>houmous, légumes grillés, feta</small></span><span class="p">5,00 €</span></div>
+        <div class="mi"><span class="n">Le Poulet <small>poulet rôti, crudités, sauce maison</small></span><span class="p">5,50 €</span></div>
+        <div class="mi"><span class="n">Le Thon <small>thon, œuf, crudités</small></span><span class="p">5,00 €</span></div>
+        <div class="mi"><span class="n">Wrap du moment <small>César · falafel · saumon</small></span><span class="p">5,50 €</span></div>
+        <div class="mi"><span class="n">La Signature <small>rotation hebdo</small></span><span class="p">5,50 €</span></div>
 
-      <!-- CARTE -->
-      <div class="menucard">
-        <div class="mhead" style="background:var(--rouge)">
-          <div class="mt">La carte</div><div class="ms">Tous les jours · take-away &amp; cafét</div>
-        </div>
-        <div class="mbody">
-          <div class="mcat">Les sandwichs &amp; wraps</div>
-          <div class="mi"><span class="n">Le Classique <small>jambon, fromage, crudités</small></span><span class="p">4,50 €</span></div>
-          <div class="mi"><span class="n">Le Végé <span class="veg">✿</span> <small>houmous, légumes grillés, feta</small></span><span class="p">5,00 €</span></div>
-          <div class="mi"><span class="n">Le Poulet <small>poulet rôti, crudités, sauce maison</small></span><span class="p">5,50 €</span></div>
-          <div class="mi"><span class="n">Le Thon <small>thon, œuf, crudités</small></span><span class="p">5,00 €</span></div>
-          <div class="mi"><span class="n">Wrap du moment <small>César · falafel · saumon</small></span><span class="p">5,50 €</span></div>
-          <div class="mi"><span class="n">La Signature <small>rotation hebdo</small></span><span class="p">5,50 €</span></div>
+        <div class="mcat">Les salades &amp; bowls</div>
+        <div class="mi"><span class="n">Salade César <small>poulet, croûtons, parmesan</small></span><span class="p">6,50 €</span></div>
+        <div class="mi"><span class="n">Bowl végétarien <span class="veg">✿</span> <small>quinoa, légumes, graines</small></span><span class="p">6,50 €</span></div>
+        <div class="mi"><span class="n">Bowl saumon / feta <small>selon arrivage</small></span><span class="p">7,00 €</span></div>
 
-          <div class="mcat">Les salades &amp; bowls</div>
-          <div class="mi"><span class="n">Salade César <small>poulet, croûtons, parmesan</small></span><span class="p">6,50 €</span></div>
-          <div class="mi"><span class="n">Bowl végétarien <span class="veg">✿</span> <small>quinoa, légumes, graines</small></span><span class="p">6,50 €</span></div>
-          <div class="mi"><span class="n">Bowl saumon / feta <small>selon arrivage</small></span><span class="p">7,00 €</span></div>
+        <div class="mcat">Les chauds — cafét</div>
+        <div class="mi"><span class="n">Pâtes <small>bolo · végé · carbonara</small></span><span class="p">6,50 €</span></div>
+        <div class="mi"><span class="n">Part de pizza <small>marguerite · végé · du jour</small></span><span class="p">3,50 €</span></div>
+        <div class="mi"><span class="n">Plat chaud du jour</span><span class="p">7,50 €</span></div>
+        <div class="mi"><span class="n">Soupe du jour + pain</span><span class="p">3,00 €</span></div>
 
-          <div class="mcat">Les chauds — cafét</div>
-          <div class="mi"><span class="n">Pâtes <small>bolo · végé · carbonara</small></span><span class="p">6,50 €</span></div>
-          <div class="mi"><span class="n">Part de pizza <small>marguerite · végé · du jour</small></span><span class="p">3,50 €</span></div>
-          <div class="mi"><span class="n">Plat chaud du jour</span><span class="p">7,50 €</span></div>
-          <div class="mi"><span class="n">Soupe du jour + pain</span><span class="p">3,00 €</span></div>
+        <div class="mcat">Snacks</div>
+        <div class="mi"><span class="n">Cookie · muffin · brownie maison</span><span class="p">2,00 €</span></div>
+        <div class="mi"><span class="n">Fruit frais · compote</span><span class="p">1,50 €</span></div>
+        <div class="mi"><span class="n">Yaourt granola</span><span class="p">3,00 €</span></div>
 
-          <div class="mcat">Snacks</div>
-          <div class="mi"><span class="n">Cookie · muffin · brownie maison</span><span class="p">2,00 €</span></div>
-          <div class="mi"><span class="n">Fruit frais · compote</span><span class="p">1,50 €</span></div>
-          <div class="mi"><span class="n">Yaourt granola</span><span class="p">3,00 €</span></div>
-
-          <div class="fbox">
-            <div class="fbt">Les formules</div>
-            <div class="fl"><b>Menu Étudiant <small>sandwich + boisson + snack</small></b><span class="fp">7,50 €</span></div>
-            <div class="fl"><b>Menu Chaud <small>pâtes ou plat + boisson</small></b><span class="fp">8,50 €</span></div>
-            <div class="fl"><b>Menu Light <small>salade + boisson</small></b><span class="fp">8,00 €</span></div>
-          </div>
+        <div class="fbox">
+          <div class="fbt">Les formules</div>
+          <div class="fl"><b>Menu Étudiant <small>sandwich + boisson + snack</small></b><span class="fp">7,50 €</span></div>
+          <div class="fl"><b>Menu Chaud <small>pâtes ou plat + boisson</small></b><span class="fp">8,50 €</span></div>
+          <div class="fl"><b>Menu Light <small>salade + boisson</small></b><span class="fp">8,00 €</span></div>
         </div>
       </div>
     </div>
   </section>
 
-  <section>
-    <p class="eyebrow">Le menu du mois</p>
-    <h2>Les plats chauds, jour après jour</h2>
-
-    <div class="intro-band">
-      <div class="t">Octobre 2026 · exemple</div>
-      <p>Chaque mois, un menu chaud qui tourne — potage, plat, accompagnement et dessert. Produits de saison, une option végétarienne chaque jour, et le sandwich signature de la semaine côté Express.</p>
+  <!-- MENU DU MOIS -->
+  <section style="border-bottom:0">
+    <div class="month-intro">
+      <div>
+        <div class="mi-t">Le menu du mois</div>
+        <div class="mi-s">Octobre 2026 · exemple</div>
+      </div>
+      <p>Un plat chaud qui tourne chaque jour — potage, plat, accompagnement, dessert. Une option végé quotidienne <span class="veg">✿</span>.</p>
     </div>
 
-    <div class="tablewrap">
-      <table class="cal">
-        <thead><tr><th>Lundi</th><th>Mardi</th><th>Mercredi</th><th>Jeudi</th><th>Vendredi</th></tr></thead>
-        <tbody>
-          <tr>
-            <td><span class="daynum">6</span><span class="pot">Potage potiron</span><span class="plat">Poulet rôti, jus thym</span><span class="acc">Carottes · riz</span><span class="des">Fruit de saison</span></td>
-            <td><span class="daynum">7</span><span class="pot">Potage tomates</span><span class="plat">Pâtes bolognaise</span><span class="acc">ou végé <span class="veg">✿</span></span><span class="des">Dessert lacté</span></td>
-            <td><span class="daynum">8</span><span class="pot">Potage poireaux</span><span class="plat">Boulettes sauce tomate</span><span class="acc">Purée</span><span class="des">Fruit</span></td>
-            <td><span class="daynum">9</span><span class="pot">Potage céleri</span><span class="plat">Curry pois chiches <span class="veg">✿</span></span><span class="acc">Semoule</span><span class="des">Dessert lacté</span></td>
-            <td><span class="daynum">10</span><span class="pot">Potage oignons</span><span class="plat">Filet de colin, citron</span><span class="acc">Brocoli · pdt</span><span class="des">Fruit</span></td>
-          </tr>
-          <tr class="exp"><td colspan="5"><b style="font-family:var(--mono);letter-spacing:.1em;color:var(--rouge)">EXPRESS ·</b> sandwich signature : <b>Poulet rôti–crudités–sauce maison</b> · wrap falafel <span class="veg">✿</span> · bowl quinoa</td></tr>
-          <tr>
-            <td><span class="daynum">13</span><span class="pot">Potage navets</span><span class="plat">Blanquette de dinde</span><span class="acc">Riz</span><span class="des">Fruit</span></td>
-            <td><span class="daynum">14</span><span class="pot">Potage brocoli</span><span class="plat">Lasagne végé <span class="veg">✿</span></span><span class="acc">Salade verte</span><span class="des">Dessert lacté</span></td>
-            <td><span class="daynum">15</span><span class="pot">Potage panais</span><span class="plat">Émincé de bœuf</span><span class="acc">Haricots verts · pdt</span><span class="des">Fruit</span></td>
-            <td><span class="daynum">16</span><span class="pot">Potage champignons</span><span class="plat">Couscous végé <span class="veg">✿</span></span><span class="acc">Courgettes, carottes</span><span class="des">Dessert lacté</span></td>
-            <td><span class="daynum">17</span><span class="pot">Potage épinards</span><span class="plat">Fish sticks</span><span class="acc">Purée patate douce</span><span class="des">Fruit</span></td>
-          </tr>
-          <tr class="exp"><td colspan="5"><b style="font-family:var(--mono);letter-spacing:.1em;color:var(--rouge)">EXPRESS ·</b> sandwich signature : <b>Végé houmous–légumes grillés–feta</b> <span class="veg">✿</span> · wrap César · salade saumon</td></tr>
-          <tr>
-            <td><span class="daynum">20</span><span class="pot">Potage céleri rave</span><span class="plat">Chili sin carne <span class="veg">✿</span></span><span class="acc">Riz complet</span><span class="des">Fruit</span></td>
-            <td><span class="daynum">21</span><span class="pot">Potage courgettes</span><span class="plat">Escalope de volaille</span><span class="acc">Chou-fleur · pdt</span><span class="des">Dessert lacté</span></td>
-            <td><span class="daynum">22</span><span class="pot">Potage chou rave</span><span class="plat">Pâtes 3 fromages</span><span class="acc">Salade</span><span class="des">Fruit</span></td>
-            <td><span class="daynum">23</span><span class="pot">Potage potiron</span><span class="plat">Tajine de légumes <span class="veg">✿</span></span><span class="acc">Semoule</span><span class="des">Dessert lacté</span></td>
-            <td><span class="daynum">24</span><span class="pot">Potage minestrone</span><span class="plat">Filet de lieu noir</span><span class="acc">Poêlée · pdt</span><span class="des">Fruit</span></td>
-          </tr>
-          <tr class="exp"><td colspan="5"><b style="font-family:var(--mono);letter-spacing:.1em;color:var(--rouge)">EXPRESS ·</b> sandwich signature : <b>Thon–œuf–crudités</b> · wrap saumon · bowl végétarien <span class="veg">✿</span></td></tr>
-          <tr>
-            <td><span class="daynum">27</span><span class="pot">Potage légumes</span><span class="plat">Rôti de porc*</span><span class="acc">Carottes · pdt</span><span class="des">Fruit</span></td>
-            <td><span class="daynum">28</span><span class="pot">Potage tomates</span><span class="plat">Omelette <span class="veg">✿</span></span><span class="acc">Potée de légumes</span><span class="des">Dessert lacté</span></td>
-            <td><span class="daynum">29</span><span class="pot">Potage chou blanc</span><span class="plat">Sauté de dinde</span><span class="acc">Pâtes complètes</span><span class="des">Fruit</span></td>
-            <td><span class="daynum">30</span><span class="pot">Potage haricots verts</span><span class="plat">Falafels <span class="veg">✿</span></span><span class="acc">Sauce yaourt · boulgour</span><span class="des">Dessert lacté</span></td>
-            <td><span class="daynum">31</span><span class="pot">Potage céleri</span><span class="plat">Gratin de poisson</span><span class="acc">Épinards · pdt</span><span class="des">Fruit</span></td>
-          </tr>
-        </tbody>
-      </table>
+    <!-- Semaine 1 -->
+    <div class="week">
+      <div class="week-label"><span class="num">1</span><span class="ttl">Semaine du 6 octobre</span></div>
+      <div class="days">
+        <div class="day"><div class="dh"><span class="dn">Lun</span><span class="dd">06</span></div><div class="row"><span class="lbl">Potage</span><span class="val">Potiron</span></div><div class="row plat"><span class="lbl">Plat</span><span class="val">Poulet rôti, jus thym</span></div><div class="row"><span class="lbl">Accomp.</span><span class="val">Carottes · riz</span></div><div class="row"><span class="lbl">Dessert</span><span class="val">Fruit de saison</span></div></div>
+        <div class="day"><div class="dh"><span class="dn">Mar</span><span class="dd">07</span></div><div class="row"><span class="lbl">Potage</span><span class="val">Tomates</span></div><div class="row plat"><span class="lbl">Plat</span><span class="val">Pâtes bolognaise <span class="veg">✿</span></span></div><div class="row"><span class="lbl">Accomp.</span><span class="val">Parmesan</span></div><div class="row"><span class="lbl">Dessert</span><span class="val">Dessert lacté</span></div></div>
+        <div class="day"><div class="dh"><span class="dn">Mer</span><span class="dd">08</span></div><div class="row"><span class="lbl">Potage</span><span class="val">Poireaux</span></div><div class="row plat"><span class="lbl">Plat</span><span class="val">Boulettes sauce tomate</span></div><div class="row"><span class="lbl">Accomp.</span><span class="val">Purée</span></div><div class="row"><span class="lbl">Dessert</span><span class="val">Fruit</span></div></div>
+        <div class="day vegday"><div class="dh"><span class="dn">Jeu</span><span class="dd">09</span></div><div class="row"><span class="lbl">Potage</span><span class="val">Céleri</span></div><div class="row plat"><span class="lbl">Plat</span><span class="val">Curry pois chiches <span class="veg">✿</span></span></div><div class="row"><span class="lbl">Accomp.</span><span class="val">Semoule</span></div><div class="row"><span class="lbl">Dessert</span><span class="val">Dessert lacté</span></div></div>
+        <div class="day"><div class="dh"><span class="dn">Ven</span><span class="dd">10</span></div><div class="row"><span class="lbl">Potage</span><span class="val">Oignons</span></div><div class="row plat"><span class="lbl">Plat</span><span class="val">Filet de colin, citron</span></div><div class="row"><span class="lbl">Accomp.</span><span class="val">Brocoli · pdt</span></div><div class="row"><span class="lbl">Dessert</span><span class="val">Fruit</span></div></div>
+      </div>
+      <div class="express"><b class="tag">Express ·</b> sandwich signature : <b>Poulet rôti–crudités–sauce maison</b> · wrap falafel <span class="veg">✿</span> · bowl quinoa</div>
+    </div>
+
+    <!-- Semaine 2 -->
+    <div class="week">
+      <div class="week-label"><span class="num">2</span><span class="ttl">Semaine du 13 octobre</span></div>
+      <div class="days">
+        <div class="day"><div class="dh"><span class="dn">Lun</span><span class="dd">13</span></div><div class="row"><span class="lbl">Potage</span><span class="val">Navets</span></div><div class="row plat"><span class="lbl">Plat</span><span class="val">Blanquette de dinde</span></div><div class="row"><span class="lbl">Accomp.</span><span class="val">Riz</span></div><div class="row"><span class="lbl">Dessert</span><span class="val">Fruit</span></div></div>
+        <div class="day vegday"><div class="dh"><span class="dn">Mar</span><span class="dd">14</span></div><div class="row"><span class="lbl">Potage</span><span class="val">Brocoli</span></div><div class="row plat"><span class="lbl">Plat</span><span class="val">Lasagne végé <span class="veg">✿</span></span></div><div class="row"><span class="lbl">Accomp.</span><span class="val">Salade verte</span></div><div class="row"><span class="lbl">Dessert</span><span class="val">Dessert lacté</span></div></div>
+        <div class="day"><div class="dh"><span class="dn">Mer</span><span class="dd">15</span></div><div class="row"><span class="lbl">Potage</span><span class="val">Panais</span></div><div class="row plat"><span class="lbl">Plat</span><span class="val">Émincé de bœuf</span></div><div class="row"><span class="lbl">Accomp.</span><span class="val">Haricots verts · pdt</span></div><div class="row"><span class="lbl">Dessert</span><span class="val">Fruit</span></div></div>
+        <div class="day vegday"><div class="dh"><span class="dn">Jeu</span><span class="dd">16</span></div><div class="row"><span class="lbl">Potage</span><span class="val">Champignons</span></div><div class="row plat"><span class="lbl">Plat</span><span class="val">Couscous végé <span class="veg">✿</span></span></div><div class="row"><span class="lbl">Accomp.</span><span class="val">Courgettes, carottes</span></div><div class="row"><span class="lbl">Dessert</span><span class="val">Dessert lacté</span></div></div>
+        <div class="day"><div class="dh"><span class="dn">Ven</span><span class="dd">17</span></div><div class="row"><span class="lbl">Potage</span><span class="val">Épinards</span></div><div class="row plat"><span class="lbl">Plat</span><span class="val">Fish sticks</span></div><div class="row"><span class="lbl">Accomp.</span><span class="val">Purée patate douce</span></div><div class="row"><span class="lbl">Dessert</span><span class="val">Fruit</span></div></div>
+      </div>
+      <div class="express"><b class="tag">Express ·</b> sandwich signature : <b>Végé houmous–légumes grillés–feta</b> <span class="veg">✿</span> · wrap César · salade saumon</div>
+    </div>
+
+    <!-- Semaine 3 -->
+    <div class="week">
+      <div class="week-label"><span class="num">3</span><span class="ttl">Semaine du 20 octobre</span></div>
+      <div class="days">
+        <div class="day vegday"><div class="dh"><span class="dn">Lun</span><span class="dd">20</span></div><div class="row"><span class="lbl">Potage</span><span class="val">Céleri rave</span></div><div class="row plat"><span class="lbl">Plat</span><span class="val">Chili sin carne <span class="veg">✿</span></span></div><div class="row"><span class="lbl">Accomp.</span><span class="val">Riz complet</span></div><div class="row"><span class="lbl">Dessert</span><span class="val">Fruit</span></div></div>
+        <div class="day"><div class="dh"><span class="dn">Mar</span><span class="dd">21</span></div><div class="row"><span class="lbl">Potage</span><span class="val">Courgettes</span></div><div class="row plat"><span class="lbl">Plat</span><span class="val">Escalope de volaille</span></div><div class="row"><span class="lbl">Accomp.</span><span class="val">Chou-fleur · pdt</span></div><div class="row"><span class="lbl">Dessert</span><span class="val">Dessert lacté</span></div></div>
+        <div class="day"><div class="dh"><span class="dn">Mer</span><span class="dd">22</span></div><div class="row"><span class="lbl">Potage</span><span class="val">Chou rave</span></div><div class="row plat"><span class="lbl">Plat</span><span class="val">Pâtes 3 fromages</span></div><div class="row"><span class="lbl">Accomp.</span><span class="val">Salade</span></div><div class="row"><span class="lbl">Dessert</span><span class="val">Fruit</span></div></div>
+        <div class="day vegday"><div class="dh"><span class="dn">Jeu</span><span class="dd">23</span></div><div class="row"><span class="lbl">Potage</span><span class="val">Potiron</span></div><div class="row plat"><span class="lbl">Plat</span><span class="val">Tajine de légumes <span class="veg">✿</span></span></div><div class="row"><span class="lbl">Accomp.</span><span class="val">Semoule</span></div><div class="row"><span class="lbl">Dessert</span><span class="val">Dessert lacté</span></div></div>
+        <div class="day"><div class="dh"><span class="dn">Ven</span><span class="dd">24</span></div><div class="row"><span class="lbl">Potage</span><span class="val">Minestrone</span></div><div class="row plat"><span class="lbl">Plat</span><span class="val">Filet de lieu noir</span></div><div class="row"><span class="lbl">Accomp.</span><span class="val">Poêlée · pdt</span></div><div class="row"><span class="lbl">Dessert</span><span class="val">Fruit</span></div></div>
+      </div>
+      <div class="express"><b class="tag">Express ·</b> sandwich signature : <b>Thon–œuf–crudités</b> · wrap saumon · bowl végétarien <span class="veg">✿</span></div>
+    </div>
+
+    <!-- Semaine 4 -->
+    <div class="week">
+      <div class="week-label"><span class="num">4</span><span class="ttl">Semaine du 27 octobre</span></div>
+      <div class="days">
+        <div class="day"><div class="dh"><span class="dn">Lun</span><span class="dd">27</span></div><div class="row"><span class="lbl">Potage</span><span class="val">Légumes</span></div><div class="row plat"><span class="lbl">Plat</span><span class="val">Rôti de porc*</span></div><div class="row"><span class="lbl">Accomp.</span><span class="val">Carottes · pdt</span></div><div class="row"><span class="lbl">Dessert</span><span class="val">Fruit</span></div></div>
+        <div class="day vegday"><div class="dh"><span class="dn">Mar</span><span class="dd">28</span></div><div class="row"><span class="lbl">Potage</span><span class="val">Tomates</span></div><div class="row plat"><span class="lbl">Plat</span><span class="val">Omelette <span class="veg">✿</span></span></div><div class="row"><span class="lbl">Accomp.</span><span class="val">Potée de légumes</span></div><div class="row"><span class="lbl">Dessert</span><span class="val">Dessert lacté</span></div></div>
+        <div class="day"><div class="dh"><span class="dn">Mer</span><span class="dd">29</span></div><div class="row"><span class="lbl">Potage</span><span class="val">Chou blanc</span></div><div class="row plat"><span class="lbl">Plat</span><span class="val">Sauté de dinde</span></div><div class="row"><span class="lbl">Accomp.</span><span class="val">Pâtes complètes</span></div><div class="row"><span class="lbl">Dessert</span><span class="val">Fruit</span></div></div>
+        <div class="day vegday"><div class="dh"><span class="dn">Jeu</span><span class="dd">30</span></div><div class="row"><span class="lbl">Potage</span><span class="val">Haricots verts</span></div><div class="row plat"><span class="lbl">Plat</span><span class="val">Falafels <span class="veg">✿</span></span></div><div class="row"><span class="lbl">Accomp.</span><span class="val">Sauce yaourt · boulgour</span></div><div class="row"><span class="lbl">Dessert</span><span class="val">Dessert lacté</span></div></div>
+        <div class="day"><div class="dh"><span class="dn">Ven</span><span class="dd">31</span></div><div class="row"><span class="lbl">Potage</span><span class="val">Céleri</span></div><div class="row plat"><span class="lbl">Plat</span><span class="val">Gratin de poisson</span></div><div class="row"><span class="lbl">Accomp.</span><span class="val">Épinards · pdt</span></div><div class="row"><span class="lbl">Dessert</span><span class="val">Fruit</span></div></div>
+      </div>
+      <div class="express"><b class="tag">Express ·</b> sandwich signature : <b>Classique jambon–fromage</b> · wrap végé <span class="veg">✿</span> · salade César</div>
     </div>
 
     <div class="legend3">
@@ -129,16 +182,14 @@
       <span>* adapté sans porc sur demande</span>
       <span>Fruits &amp; légumes de saison privilégiés</span>
     </div>
-    <p class="note" style="margin-top:16px">Menu indicatif, susceptible d'ajustements selon les arrivages et le calendrier scolaire. Poissons issus de pêcheries durables.</p>
+    <p class="note" style="margin-top:12px">Menu indicatif, susceptible d'ajustements selon les arrivages et le calendrier scolaire. Poissons issus de pêcheries durables.</p>
   </section>
- </div>
+
 </div>
 
 <footer class="foot">
-  <div class="logos">
-    <img src="/assets/logo-esa-bxl.png" alt="ESA St-Luc Bruxelles">
-  </div>
-  Kantoche 57 · Saint-Luc Bruxelles — <a href="/" style="color:var(--rouge)">retour au projet</a>
+  <div class="logos"><img src="/assets/logo-esa-bxl.png" alt="ESA St-Luc Bruxelles"></div>
+  Kantoche 57 · Saint-Luc Bruxelles — <a href="/events.html" style="color:var(--rouge)">voir l'offre catering</a>
 </footer>
 
 </body>
