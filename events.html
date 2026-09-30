@@ -29,6 +29,41 @@
   .uc{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px 20px}
   .uc h3{font-family:var(--serif);font-size:17px;margin:0 0 6px}
   .uc p{margin:0;font-size:13.5px;color:var(--muted)}
+  .badges{display:flex;flex-wrap:wrap;gap:4px;margin-top:3px}
+  .badge{font-size:9px;line-height:1;padding:2px 5px;border-radius:20px;font-family:var(--mono);white-space:nowrap}
+  .b-type{color:#fff}
+  .t-veg{background:var(--sapin)}
+  .alg{background:var(--bg);color:var(--muted);border:1px solid var(--line)}
+  .unit{font-family:var(--mono);font-size:11px;opacity:.85}
+  .layout{display:grid;grid-template-columns:1fr 330px;gap:20px;align-items:start;margin-top:8px}
+  @media (max-width:860px){.layout{grid-template-columns:1fr}}
+  .catcard{background:var(--paper);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);margin-bottom:16px}
+  .chead{background:var(--bleu);color:#fff;padding:12px 18px;font-family:var(--serif);font-size:17px;font-weight:600}
+  .cbody{padding:6px 18px 12px}
+  .oi{display:grid;grid-template-columns:1fr auto auto;gap:12px;align-items:center;padding:9px 0;border-bottom:1px dotted var(--line)}
+  .oi .oinfo{min-width:0}.oi .oinfo .nm{font-size:14px;font-weight:600}.oi .oinfo small{display:block;color:var(--muted);font-size:11.5px}
+  .oi .up{font-family:var(--mono);font-size:13px;color:var(--bleu);white-space:nowrap}
+  .qty{display:flex;align-items:center;gap:6px}
+  .qty button{width:26px;height:26px;border-radius:6px;border:1px solid var(--line);background:var(--bg);font-size:16px;cursor:pointer;color:var(--ink);line-height:1}
+  .qty button:hover{background:var(--rouge);color:#fff;border-color:var(--rouge)}
+  .qty input{width:42px;text-align:center;font-family:var(--mono);font-size:14px;border:1px solid var(--line);border-radius:6px;padding:4px;background:var(--paper);color:var(--ink)}
+  .summary{position:sticky;top:70px;background:var(--paper);border:2px solid var(--rouge);border-radius:16px;overflow:hidden;box-shadow:var(--shadow)}
+  .shead{background:var(--rouge);color:#fff;padding:13px 18px;font-family:var(--black);font-size:16px}
+  .sbody{padding:16px 18px}
+  .field{margin-bottom:12px}
+  .field label{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+  .field input,.field textarea{width:100%;border:1px solid var(--line);border-radius:8px;padding:9px 10px;font-family:var(--sans);font-size:13.5px;background:var(--bg);color:var(--ink);box-sizing:border-box}
+  .field textarea{resize:vertical;min-height:54px}
+  .lines{border-top:1px dashed var(--line);margin-top:8px;padding-top:10px;font-size:13px;max-height:170px;overflow-y:auto}
+  .lines .ln{display:flex;justify-content:space-between;gap:8px;padding:3px 0;color:var(--muted)}.lines .ln b{color:var(--ink);font-weight:600}
+  .total{display:flex;justify-content:space-between;align-items:baseline;margin-top:12px;padding-top:12px;border-top:2px solid var(--line)}
+  .total .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .total .amt{font-family:var(--black);font-size:28px;color:var(--rouge)}
+  .btns{display:flex;flex-direction:column;gap:8px;margin-top:14px}
+  .btn{display:block;width:100%;text-align:center;padding:11px;border-radius:10px;font-weight:600;font-size:13.5px;cursor:pointer;border:none;font-family:var(--sans)}
+  .btn-dl{background:var(--rouge);color:#fff}.btn-mail{background:var(--sapin);color:#fff}.btn:hover{filter:brightness(1.08)}
+  .hint{font-size:11px;color:var(--muted);margin-top:10px;line-height:1.4}
+  .empty{color:var(--muted);font-size:13px;font-style:italic;padding:8px 0}
 </style>
 </head>
 <body>
@@ -73,14 +108,14 @@
         <div class="ei"><span class="n">Pause santé <small>+ jus pressés, fruits, yaourt</small></span><span class="p">6,00 €</span></div>
 
         <div class="evcat">Les lunchs <small style="text-transform:none;letter-spacing:0">/ pers.</small></div>
-        <div class="ei"><span class="n">Lunch Sandwichs <small>3 pièces + boisson</small></span><span class="p">9,00 €</span></div>
-        <div class="ei"><span class="n">Lunch Salades <small>bowl + pain + boisson</small></span><span class="p">11,00 €</span></div>
-        <div class="ei"><span class="n">Lunch Mixte <small>sandwichs + bowl + douceur</small></span><span class="p">13,00 €</span></div>
-        <div class="ei"><span class="n">Lunch Chaud <small>plat + dessert + boisson</small></span><span class="p">15,00 €</span></div>
+        <div class="ei"><span class="n">Lunch Sandwichs <small>3 pièces + boisson</small><span class="badges"><span class="badge b-type t-veg">✿ option végé</span></span></span><span class="p">9,00 €</span></div>
+        <div class="ei"><span class="n">Lunch Salades <small>bowl + pain + boisson</small><span class="badges"><span class="badge b-type t-veg">✿ option végé</span></span></span><span class="p">11,00 €</span></div>
+        <div class="ei"><span class="n">Lunch Mixte <small>sandwichs + bowl + douceur</small><span class="badges"><span class="badge b-type t-veg">✿ option végé</span></span></span><span class="p">13,00 €</span></div>
+        <div class="ei"><span class="n">Lunch Chaud <small>plat + dessert + boisson</small><span class="badges"><span class="badge b-type t-veg">✿ option végé</span></span></span><span class="p">15,00 €</span></div>
 
         <div class="evcat">Les plateaux <small style="text-transform:none;letter-spacing:0">~10 pers.</small></div>
-        <div class="ei"><span class="n">Sandwichs &amp; wraps <small>25 pièces</small></span><span class="p">55,00 €</span></div>
-        <div class="ei"><span class="n">Salades &amp; bowls <small>5 bowls</small></span><span class="p">60,00 €</span></div>
+        <div class="ei"><span class="n">Sandwichs &amp; wraps <small>25 pièces</small><span class="badges"><span class="badge b-type t-veg">✿ option végé</span></span></span><span class="p">55,00 €</span></div>
+        <div class="ei"><span class="n">Salades &amp; bowls <small>5 bowls</small><span class="badges"><span class="badge b-type t-veg">✿ 100% végé possible</span></span></span><span class="p">60,00 €</span></div>
         <div class="ei"><span class="n">Mignardises maison <small>30 pièces</small></span><span class="p">40,00 €</span></div>
         <div class="ei"><span class="n">Fruits frais découpés</span><span class="p">35,00 €</span></div>
 
@@ -89,22 +124,132 @@
         <div class="ei"><span class="n">Réception complète <small>10 pièces + boissons + douceurs</small></span><span class="p">18,00 €</span></div>
         <div class="ei"><span class="n">Cocktail signature <small>avec boissons maison</small></span><span class="p">sur devis</span></div>
 
-        <p class="note">Livraison sur site incluse · vaisselle écoresponsable · régimes spécifiques (végé, végan, sans gluten, halal) sans supplément.</p>
+        <p class="note">Livraison sur site incluse · vaisselle écoresponsable · régimes spécifiques (végé, végan, sans gluten, halal) sans supplément. <b>Fiche allergènes complète fournie à la commande.</b></p>
       </div>
     </div>
 
-    <div class="cta" style="margin-top:24px;background:var(--bleu)">
-      <h2>Un événement à organiser ?</h2>
-      <p>Dites-nous la date, le nombre de convives et le format — nous vous envoyons un devis.</p>
-      <div class="contact">abh@gestiamo.be · +32 486 82 48 08</div>
+  </section>
+
+  <!-- CONFIGURATEUR DE COMMANDE -->
+  <section style="border-bottom:0">
+    <p class="eyebrow" style="color:var(--bleu)">Composez votre commande</p>
+    <h2>Estimez votre catering en direct</h2>
+    <p class="sub">Choisissez vos articles, le total se calcule automatiquement. Renseignez vos coordonnées, puis téléchargez la fiche ou envoyez-la nous par mail.</p>
+
+    <div class="layout">
+      <div>
+        <div class="catcard"><div class="chead">Les pauses <span class="unit">/ personne</span></div><div class="cbody" id="cat-pauses"></div></div>
+        <div class="catcard"><div class="chead">Les lunchs <span class="unit">/ personne</span></div><div class="cbody" id="cat-lunchs"></div></div>
+        <div class="catcard"><div class="chead">Les plateaux <span class="unit">~10 pers.</span></div><div class="cbody" id="cat-plateaux"></div></div>
+        <div class="catcard"><div class="chead">Réceptions &amp; événements <span class="unit">/ personne</span></div><div class="cbody" id="cat-events"></div></div>
+        <div class="catcard"><div class="chead">Matériel &amp; consommables <span class="unit">à la demande</span></div><div class="cbody" id="cat-materiel"></div></div>
+      </div>
+
+      <div class="summary">
+        <div class="shead">Votre commande</div>
+        <div class="sbody">
+          <div class="field"><label>Nom / organisation</label><input id="f-nom" placeholder="Ex. Secrétariat ESA"></div>
+          <div class="field"><label>Date de livraison</label><input id="f-date" type="date"></div>
+          <div class="field"><label>Adresse — livraison ou enlèvement</label><input id="f-lieu" placeholder="Ex. Rue d'Irlande 57, local 2"></div>
+          <div class="field"><label>Détails / demandes</label><textarea id="f-det" placeholder="Nb de convives, allergies, heure souhaitée, régimes…"></textarea></div>
+          <div class="lines" id="lines"><div class="empty">Sélectionnez des articles…</div></div>
+          <div class="total"><span class="lbl">Total estimé</span><span class="amt" id="total">0 €</span></div>
+          <div class="btns">
+            <button class="btn btn-dl" onclick="telecharger()">⬇ Télécharger la fiche</button>
+            <button class="btn btn-mail" onclick="envoyerMail()">✉ Envoyer par mail</button>
+          </div>
+          <p class="hint">Estimation indicative TVAC. La commande n'est confirmée qu'après notre retour. Min. 10 personnes · 48h à l'avance.</p>
+        </div>
+      </div>
     </div>
   </section>
 </div>
 
 <footer class="foot">
   <div class="logos"><img src="/assets/logo-esa-bxl.png" alt="ESA St-Luc Bruxelles"></div>
-  Kantoche 57 · Saint-Luc Bruxelles — <a href="/menu.html" style="color:var(--rouge)">voir la carte</a>
+  Kantoche 57 · Saint-Luc Bruxelles — abh@gestiamo.be · +32 486 82 48 08
 </footer>
+
+<script>
+  var PRODUITS = {
+    pauses: [
+      {id:'p1', nm:'Pause café', sub:'café/thé + eau', pu:2.50},
+      {id:'p2', nm:'Pause gourmande', sub:'+ jus, viennoiseries', pu:5.00},
+      {id:'p3', nm:'Pause santé', sub:'+ jus pressés, fruits, yaourt', pu:6.00},
+    ],
+    lunchs: [
+      {id:'l1', nm:'Lunch Sandwichs', sub:'3 pièces + boisson · option végé', pu:9.00},
+      {id:'l2', nm:'Lunch Salades', sub:'bowl + pain + boisson · option végé', pu:11.00},
+      {id:'l3', nm:'Lunch Mixte', sub:'sandwichs + bowl + douceur', pu:13.00},
+      {id:'l4', nm:'Lunch Chaud', sub:'plat + dessert + boisson', pu:15.00},
+    ],
+    plateaux: [
+      {id:'t1', nm:'Plateau sandwichs & wraps', sub:'25 pièces', pu:55.00},
+      {id:'t2', nm:'Plateau salades & bowls', sub:'5 bowls', pu:60.00},
+      {id:'t3', nm:'Plateau mignardises maison', sub:'30 pièces', pu:40.00},
+      {id:'t4', nm:'Plateau fruits frais découpés', sub:'', pu:35.00},
+    ],
+    events: [
+      {id:'e1', nm:'Apéritif dînatoire', sub:'6 pièces + boisson', pu:12.00},
+      {id:'e2', nm:'Réception complète', sub:'10 pièces + boissons + douceurs', pu:18.00},
+    ],
+    materiel: [
+      {id:'m1', nm:'Vaisselle réutilisable', sub:'assiette + couverts + verre / pers.', pu:1.50},
+      {id:'m2', nm:'Nappage & serviettes', sub:'par table', pu:5.00},
+      {id:'m3', nm:'Percolateur café', sub:'location / événement', pu:25.00},
+      {id:'m4', nm:'Fontaine à eau / jus', sub:'10 L, avec gobelets', pu:20.00},
+      {id:'m5', nm:'Bouteille de vin', sub:'sélection maison', pu:14.00},
+      {id:'m6', nm:'Bulles (crémant)', sub:'75 cl', pu:22.00},
+      {id:'m7', nm:'Softs & eaux', sub:'pack 6 bouteilles', pu:9.00},
+      {id:'m8', nm:'Mange-debout', sub:'location / unité', pu:12.00},
+      {id:'m9', nm:'Personnel de service', sub:'par heure / serveur', pu:28.00},
+      {id:'m10', nm:'Reprise & nettoyage', sub:'forfait événement', pu:35.00},
+    ]
+  };
+  var qte = {};
+  function euro(n){ return n.toLocaleString('fr-BE',{minimumFractionDigits:2,maximumFractionDigits:2})+' €'; }
+  function render(catId, listId){
+    document.getElementById(catId).innerHTML = PRODUITS[listId].map(function(p){
+      return '<div class="oi"><div class="oinfo"><span class="nm">'+p.nm+'</span>'+(p.sub?'<small>'+p.sub+'</small>':'')+'</div>'+
+        '<span class="up">'+euro(p.pu)+'</span>'+
+        '<div class="qty"><button onclick="chg(\''+p.id+'\',-1)">−</button>'+
+        '<input id="q-'+p.id+'" type="number" min="0" value="0" onchange="setq(\''+p.id+'\',this.value)">'+
+        '<button onclick="chg(\''+p.id+'\',1)">+</button></div></div>';
+    }).join('');
+  }
+  function allProducts(){ return [].concat(PRODUITS.pauses,PRODUITS.lunchs,PRODUITS.plateaux,PRODUITS.events,PRODUITS.materiel); }
+  function chg(id,d){ var q=(qte[id]||0)+d; if(q<0)q=0; qte[id]=q; document.getElementById('q-'+id).value=q; maj(); }
+  function setq(id,v){ var q=parseInt(v)||0; if(q<0)q=0; qte[id]=q; document.getElementById('q-'+id).value=q; maj(); }
+  function lignes(){ var out=[]; allProducts().forEach(function(p){ if(qte[p.id]>0){ out.push({nm:p.nm,q:qte[p.id],pu:p.pu,tot:qte[p.id]*p.pu}); } }); return out; }
+  function maj(){
+    var L=lignes(), box=document.getElementById('lines');
+    if(L.length===0){ box.innerHTML='<div class="empty">Sélectionnez des articles…</div>'; }
+    else { box.innerHTML=L.map(function(l){ return '<div class="ln"><span>'+l.q+' × <b>'+l.nm+'</b></span><span>'+euro(l.tot)+'</span></div>'; }).join(''); }
+    var tot=L.reduce(function(a,l){return a+l.tot;},0);
+    document.getElementById('total').textContent=euro(tot);
+  }
+  function ficheTexte(){
+    var L=lignes();
+    var nom=document.getElementById('f-nom').value||'—', date=document.getElementById('f-date').value||'—';
+    var lieu=document.getElementById('f-lieu').value||'—', det=document.getElementById('f-det').value||'—';
+    var tot=L.reduce(function(a,l){return a+l.tot;},0);
+    var t='KANTOCHE 57 — DEMANDE DE CATERING\n====================================\n\n';
+    t+='Nom / organisation : '+nom+'\nDate de livraison  : '+date+'\nLieu (livr./enlèv.): '+lieu+'\nDétails            : '+det+'\n\nARTICLES\n--------\n';
+    if(L.length===0){ t+='(aucun article sélectionné)\n'; } else { L.forEach(function(l){ t+=l.q+' x '+l.nm+'  —  '+euro(l.pu)+'/u  =  '+euro(l.tot)+'\n'; }); }
+    t+='\nTOTAL ESTIMÉ TVAC : '+euro(tot)+'\n\nEstimation indicative — commande confirmée après retour de Kantoche 57.\nKantoche 57 · Saint-Luc Bruxelles · abh@gestiamo.be · +32 486 82 48 08\n';
+    return t;
+  }
+  function telecharger(){
+    var blob=new Blob([ficheTexte()],{type:'text/plain;charset=utf-8'}), url=URL.createObjectURL(blob);
+    var a=document.createElement('a'); var nom=(document.getElementById('f-nom').value||'commande').replace(/[^a-z0-9]/gi,'_');
+    a.href=url; a.download='Kantoche57_catering_'+nom+'.txt'; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+  }
+  function envoyerMail(){
+    var sujet='Demande de catering — '+(document.getElementById('f-nom').value||'Kantoche 57');
+    window.location.href='mailto:abh@gestiamo.be?subject='+encodeURIComponent(sujet)+'&body='+encodeURIComponent(ficheTexte());
+  }
+  render('cat-pauses','pauses'); render('cat-lunchs','lunchs'); render('cat-plateaux','plateaux'); render('cat-events','events'); render('cat-materiel','materiel'); maj();
+</script>
 
 </body>
 </html>
